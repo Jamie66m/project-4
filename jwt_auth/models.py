@@ -7,12 +7,12 @@ from django.contrib.auth.models import AbstractUser
 
 class User(AbstractUser):
 
-  first_name = models.CharField(max_length=20)
-  last_name = models.CharField(max_length=20)
-  user_bio = models.CharField(max_length=200)
+  first_name = models.CharField(max_length=20, blank=True)
+  last_name = models.CharField(max_length=20, blank=True)
+  user_bio = models.CharField(max_length=200, blank=True)
   handicap = models.PositiveIntegerField(null=True)
-  profileimage = models.ImageField()
-  video_of_swing = models.FileField()
+  profileimage = models.ImageField(blank=True)
+  video_of_swing = models.FileField(blank=True)
 
 
 class GolfBag(models.Model):
@@ -30,8 +30,12 @@ class GolfBag(models.Model):
 
 class UserGolfPhotos(models.Model):
 
-  image = models.ImageField(verbose_name='golf photos')
+  image = models.ImageField()
   user = models.ForeignKey(User, related_name="usergolfphotos", on_delete=models.PROTECT)
+
+class UserHomeCourse(models.Model):
+   course = models.OneToOneField(Course, on_delete=models.PROTECT)
+   user = models.ForeignKey(User, related_name="userhomecourse", on_delete=models.PROTECT)
 
 class UserCoursePlayed(models.Model):
 
@@ -53,7 +57,7 @@ class UserCourseFavourites(models.Model):
   user = models.ForeignKey(User, related_name="usercoursefavourites", on_delete=models.CASCADE)
 
 class CourseComment(models.Model):
-  comment = models.CharField(max_length=5)
-  created_at = models.DateTimeField()
+  comment = models.CharField(max_length=200)
+  created_at = models.DateTimeField(auto_now_add=True)
   course = models.ForeignKey(Course, related_name="coursecomments", on_delete=models.PROTECT)
   user = models.ForeignKey(User, related_name='usercoursecomments', on_delete=models.PROTECT)

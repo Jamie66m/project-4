@@ -21,23 +21,17 @@ class CourseSerializer(serializers.ModelSerializer):
 
 class CourseImageSerializer(serializers.ModelSerializer):
 
-  course = CourseSerializer
-
   class Meta:
     model = CourseImage
     fields = ('id', 'image', 'course')
 
 class HoleSerializer(serializers.ModelSerializer):
 
-  course = CourseSerializer
-
   class Meta:
     model = Hole
     fields = ('id', 'number', 'video', 'hole_graph', 'bunkers', 'Mens_Par', 'Mens_SI', 'Ladies_Par', 'Ladies_SI','course')
 
 class HoleTeeBoxSerializer(serializers.ModelSerializer):
-
-  hole = HoleSerializer
 
   class Meta:
     model = HoleTeeBox
