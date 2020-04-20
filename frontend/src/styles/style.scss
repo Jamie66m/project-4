@@ -1,0 +1,120 @@
+// Main Home
+* {
+  font-family: 'Raleway', sans-serif;
+}
+
+.mainNonUserHome {
+  height: 400vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid red;
+
+  .mainNonUserHomeImageContainer {
+    height: 18%;
+    width: 100%;
+    border: 2px solid green;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: url('https://royalcountydown.designmode.intelligentgolf.co.uk/images/resources/royalcountydown/new-home-slide-2-large.jpg');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+    background-blend-mode: hard-light;
+
+    .mainNonUserHomeTitle {
+      font-size: 75px;
+      color: white;
+      font-weight: 500;
+      text-transform: uppercase;
+    }
+
+    .mainNonUserHomeSubTitle {
+      font-size: 30px;
+      color: rgb(226, 220, 220);
+      font-weight: 400;
+      text-transform: uppercase;
+    }
+  }
+}
+
+
+// User Home
+
+// Navbar
+
+.navbar {
+  height: 100px;
+  border-top: 3px solid rgb(126, 80, 20);
+  box-shadow: 0 5px 5px rgba(182, 182, 182, 0.75);
+}
+
+// Login
+
+#loginhero {
+  #loginhero-body{
+    background-image: url('https://royalcountydown.designmode.intelligentgolf.co.uk/images/resources/royalcountydown/new-home-slide-2-large.jpg');
+    background-position: center;
+    background-repeat:  no-repeat;
+    background-attachment: fixed;
+    background-size:  cover;
+  }
+}
+
+#loginbox {
+  animation: fade ease-in 1.5s forwards;
+}
+
+// Register
+
+#registerhero {
+  #registerhero-body{
+    background-image: url('https://royalcountydown.designmode.intelligentgolf.co.uk/images/resources/royalcountydown/new-home-slide-2-large.jpg');
+    background-position: center;
+    background-repeat:  no-repeat;
+    background-attachment: fixed;
+    background-size:  cover;
+  }
+}
+
+#registerbox {
+  animation: fade ease-in 1.5s forwards;
+}
+
+@keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  75% {
+    opacity: 0.75;
+  }
+  100% {
+    opacity: 0.8;
+  }
+}
+
+@-webkit-keyframes fade {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.25;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  75% {
+    opacity: 0.75;
+  }
+  100% {
+    opacity: 0.8;
+  }
+}

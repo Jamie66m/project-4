@@ -34,14 +34,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = User
-        fields = ('username', 'email', 'password', 'password_confirmation',)
-
-
-class UserProfileSerializer(serializers.ModelSerializer):
-
-    class Meta:
-      model = User
-      fields = ('id', 'first_name', 'last_name', 'user_bio', 'handicap', 'profileimage', 'video_of_swing')
+        fields = ('id','username', 'email', 'password', 'password_confirmation')
 
 
 class GolfBagSerializer(serializers.ModelSerializer):
@@ -100,3 +93,30 @@ class CourseCommentSerializer(serializers.ModelSerializer):
     class Meta:
       model = CourseComment
       fields = ('id', 'comment', 'created_at', 'course', 'user')
+
+class PopulatedUserSerializer(serializers.ModelSerializer):
+
+    password = serializers.CharField(write_only=True)
+    password_confirmation = serializers.CharField(write_only=True)
+
+    def validate(self, data):
+
+        password = data.pop('password')
+        password_confirmation = data.pop('password_confirmation')
+
+        if password != password_confirmation:
+            raise serializers.ValidationError({'password_confirmation': 'Passwords do not match'})
+
+        try:
+            validations.validate_password(password=password)
+        except ValidationError as err:
+            raise serializers.ValidationError({'password': err.messages})
+
+        data['password'] = make_password(password)
+        return data
+
+    usergolfbag = GolfBagSerializer(many=True)  
+      
+    class Meta:
+      model = User
+      fields = ('id','username', 'email', 'password', 'password_confirmation', 'first_name', 'last_name', 'user_bio', 'handicap', 'profileimage', 'video_of_swing', 'usergolfbag')

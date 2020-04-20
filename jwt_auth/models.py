@@ -13,7 +13,7 @@ class User(AbstractUser):
   handicap = models.PositiveIntegerField(null=True)
   profileimage = models.ImageField(blank=True)
   video_of_swing = models.FileField(blank=True)
-
+  
 class GolfBag(models.Model):
   putter = models.CharField(max_length=30)
   sw = models.CharField(max_length=30)

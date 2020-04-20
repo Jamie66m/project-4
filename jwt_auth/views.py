@@ -15,11 +15,8 @@ from .models import GolfBag, UserGolfPhotos, UserCoursePlayed, UserCourseFavouri
 
 from django.conf import settings
 import jwt
-from .serializers import UserSerializer, UserProfileSerializer, UserCourseFavouritesSerializer, UserCoursePlayedSerializer, UserCourseWishListSerializer, UserGolfPhotosSerializer, CourseCommentSerializer, GolfBagSerializer, UserHomeCourseSerializer
+from .serializers import UserSerializer, PopulatedUserSerializer, UserCourseFavouritesSerializer, UserCoursePlayedSerializer, UserCourseWishListSerializer, UserGolfPhotosSerializer, CourseCommentSerializer, GolfBagSerializer, UserHomeCourseSerializer
 
-class IsOwnerOrReadOnly(BasePermission):
-    def has_object_permission(self, request, view, obj):
-        return obj.user == request.user
 
 class RegisterView(APIView):
 
@@ -52,70 +49,54 @@ class LoginView(APIView):
         token = jwt.encode({'sub': user.id}, settings.SECRET_KEY, algorithm='HS256')
         return Response({'token': token, 'message': f'Welcome back {user.username}!'})
 
-class UserProfileListView(ListCreateAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserProfileSerializer
+class UserProfileDetailView(APIView):
+    permission_classes = (IsAuthenticated, )
 
-    def get_all_user_profiles(self, request):
-      users = User.objects.all()
-      serializer = UserProfileSerializer(users, many=True)
-
-      return Response(serializer.data)
-
-class UserProfileDetailView(RetrieveUpdateDestroyAPIView):
-    queryset = User.objects.all()
-    serializer_class = UserProfileSerializer
-
-    def get_user_profile(self, request, pk):
-      user = User.objects.get(pk=pk)
-      serializer = UserProfileSerializer
-
+    def get(self, request):
+      user = User.objects.get(pk=request.user.id)
+      serializer = PopulatedUserSerializer(user)
       return Response(serializer.data)
 
 class GolfBagCreateView(ListCreateAPIView):
-    queryset = GolfBag.objects.all()
-    serializer_class = GolfBagSerializer
+    # queryset = GolfBag.objects.all()
+    # serializer_class = GolfBagSerializer
+    permission_classes = (IsAuthenticated, )
 
-    def get(self, request, pk):
-      golfbag = GolfBag.objects.filter(user_id=pk)
+    def get(self, request):
+      golfbag = GolfBag.objects.get(pk=request.user.id)
       serializer = GolfBagSerializer(golfbag, many=True)
       return Response(serializer.data)
 
-    def post(self, request, pk, *args, **kwargs):
-      golfbag = GolfBag.objects.create(user_id=pk)
-      serializer = GolfBagSerializer(golfbag, data=request.data)
-      if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data, status=HTTP_201_CREATED)
-      return Response(serializer.data, status=HTTP_422_UNPROCESSABLE_ENTITY)
+    def post(self, request):
+      request.data['user'] = request.user.id
+      golfbag = GolfBagSerializer(data=request.data)
+      if golfbag.is_valid():
+          golfbag.save()
+          return Response(golfbag.data, status=HTTP_201_CREATED)
+      return Response(golfbag.errors, status=HTTP_422_UNPROCESSABLE_ENTITY)
+
+    # def post(self, request):
+    #   golfbag = GolfBag.objects.create(user_id=request.user.id, pk=request.user.id)
+    #   serializer = GolfBagSerializer(golfbag, data=request.data)
+    #   if serializer.is_valid():
+    #     serializer.save()
+    #     return Response(serializer.data, status=HTTP_201_CREATED)
+    #   return Response(serializer.data, status=HTTP_422_UNPROCESSABLE_ENTITY)
 
 class GolfBagDetailView(RetrieveUpdateDestroyAPIView):
     queryset = GolfBag.objects.all()
     serializer_class = GolfBagSerializer
-    # permission_classes = (IsOwnerOrReadOnly,)
+    permission_classes = (IsAuthenticated, )
 
-    def get(self, request, pk, *args, **kwargs):
-      golfbag = GolfBag.objects.get(id=self.kwargs.get('pk5', ''))
+    def get(self, request):
+      golfbag = GolfBag.objects.get(pk=request.user.id)
       serializer = GolfBagSerializer(golfbag)
       return Response(serializer.data)
-
-#     def get_golf_bag(self, request, pk):
-#       golfbag = GolfBag.objects.filter(user_id=pk)
-#       # self.check_object_permissions(request, golf_bag)
-#       serializer = GolfBagSerializer(golfbag)
-#       return Response(serializer.data)
-
-#     def post(self, request, pk):
-#       golfbag = GolfBag.objects.filter(user_id=pk)
-#       serializer = GolfBagSerializer(data=request.data)
-#       if serializer.is_valid():
-#         serializer.save(user=request.user) # add the user to the model on save
-#         return Response(serializer.data, status=201)
-#       return Response(serializer.data)
 
 class UserGolfPhotosListView(ListCreateAPIView):
     queryset = UserGolfPhotos.objects.all()
     serializer_class = UserGolfPhotosSerializer
+    permission_classes = (IsAuthenticated, )
 
     def get(self, request, pk):
       usergolfphotos = UserGolfPhotos.objects.filter(user_id=pk)
@@ -126,6 +107,7 @@ class UserGolfPhotosListView(ListCreateAPIView):
 class UserGolfPhotosDetailView(RetrieveUpdateDestroyAPIView):
     queryset = UserGolfPhotos.objects.all()
     serializer_class = UserGolfPhotosSerializer
+    permission_classes = (IsAuthenticated, )
 
     def get(self, request, pk, *args, **kwargs):
       usergolfphoto = UserGolfPhotos.objects.get(id=self.kwargs.get('pk6', ''))
@@ -135,6 +117,7 @@ class UserGolfPhotosDetailView(RetrieveUpdateDestroyAPIView):
 class AllUsersCoursePlayedListView(ListCreateAPIView):
     queryset = UserCoursePlayed.objects.all()
     serializer_class = UserCoursePlayedSerializer
+    permission_classes = (IsAuthenticated, )
 
     def get(self, request):
       allcoursesplayed = UserCoursePlayed.objects.all()
@@ -145,6 +128,7 @@ class AllUsersCoursePlayedListView(ListCreateAPIView):
 class UserCoursePlayedListView(ListCreateAPIView):
     queryset = UserCoursePlayed.objects.all()
     serializer_class = UserCoursePlayedSerializer
+    permission_classes = (IsAuthenticated, )
 
     def get(self, request, pk):
       allusercourseplayeds = UserCoursePlayed.objects.filter(user_id=pk)
@@ -162,6 +146,7 @@ class UserCoursePlayedListView(ListCreateAPIView):
 class UserCoursePlayedDetailView(RetrieveUpdateDestroyAPIView):
     queryset = UserCoursePlayed.objects.all()
     serializer_class = UserCoursePlayedSerializer
+    permission_classes = (IsAuthenticated, )
 
     def get(self, request, pk, *args, **kwargs):
       courseplayedbyuser = UserCoursePlayed.objects.get(id=self.kwargs.get('pk7', ''))
@@ -171,6 +156,7 @@ class UserCoursePlayedDetailView(RetrieveUpdateDestroyAPIView):
 class UserCourseWishListListView(ListCreateAPIView):
     queryset = UserCourseWishlist.objects.all()
     serializer_class = UserCourseWishListSerializer
+    permission_classes = (IsAuthenticated, )
 
     def get(self, request, pk):
       allusercoursewishlist = UserCourseWishlist.objects.filter(user_id=pk)
@@ -188,6 +174,7 @@ class UserCourseWishListListView(ListCreateAPIView):
 class UserCourseWishListDetailView(RetrieveUpdateDestroyAPIView):
     queryset = UserCourseWishlist.objects.all()
     serializer_class = UserCourseWishListSerializer
+    permission_classes = (IsAuthenticated, )
 
     def get(self, request, pk, *args, **kwargs):
       coursewishlistbyuser = UserCourseWishlist.objects.get(id=self.kwargs.get('pk8', ''))
@@ -197,6 +184,7 @@ class UserCourseWishListDetailView(RetrieveUpdateDestroyAPIView):
 class AllUsersCourseFavouritesList(ListCreateAPIView):
     queryset = UserCourseFavourites.objects.all()
     serializer_class = UserCourseFavouritesSerializer
+    permission_classes = (IsAuthenticated, )
 
     def get(self, request):
       allcoursefavourites = UserCourseFavourites.objects.all()
@@ -207,6 +195,7 @@ class AllUsersCourseFavouritesList(ListCreateAPIView):
 class UserCourseFavouritesListView(ListCreateAPIView):
     queryset = UserCourseFavourites.objects.all()
     serializer_class = UserCourseFavouritesSerializer
+    permission_classes = (IsAuthenticated, )
 
     def get(self, request, pk):
       allusercoursefavourites = UserCourseFavourites.objects.filter(user_id=pk)
@@ -224,6 +213,7 @@ class UserCourseFavouritesListView(ListCreateAPIView):
 class UserCourseFavouritesDetailView(RetrieveUpdateDestroyAPIView):
     queryset = UserCourseFavourites.objects.all()
     serializer_class = UserCourseFavouritesSerializer
+    permission_classes = (IsAuthenticated, )
 
     def get(self, request, pk, *args, **kwargs):
       coursefavouritebyuser = UserCourseFavourites.objects.get(id=self.kwargs.get('pk9', ''))
@@ -233,6 +223,7 @@ class UserCourseFavouritesDetailView(RetrieveUpdateDestroyAPIView):
 class UserHomeCourseDetailView(RetrieveUpdateDestroyAPIView):
     queryset = UserHomeCourse.objects.all()
     serializer_class = UserHomeCourseSerializer
+    permission_classes = (IsAuthenticated, )
 
     def post(self, request, pk, *args, **kwargs):
       userhomecourse = UserHomeCourse.objects.create(user_id=pk)
@@ -246,6 +237,7 @@ class UserHomeCourseDetailView(RetrieveUpdateDestroyAPIView):
 class CourseCommentListView(ListCreateAPIView):
     queryset = CourseComment.objects.all()
     serializer_class = CourseCommentSerializer
+    permission_classes = (IsAuthenticated, )
 
     def get(self, request, pk, *args, **kwargs):
       coursecomments = CourseComment.objects.filter(course_id=pk)
@@ -263,11 +255,11 @@ class CourseCommentListView(ListCreateAPIView):
 class CourseCommentDetailView(RetrieveUpdateDestroyAPIView):
     queryset = CourseComment.objects.all()
     serializer_class = CourseCommentSerializer
-    permission_classes = (IsOwnerOrReadOnly,)
+    permission_classes = (IsAuthenticated, )
+
 
     def get(self, request, pk, *args, **kwargs):
        coursecomment = CourseComment.objects.get(id=self.kwargs.get('pk10', ''))
-       self.check_object_permissions(request, coursecomment)
        serializer = CourseCommentSerializer(coursecomment)
 
        return Response(serializer.data)

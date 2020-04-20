@@ -11,13 +11,15 @@ class AddressSerializer(serializers.ModelSerializer):
 
 class CourseSerializer(serializers.ModelSerializer):
 
+  address = AddressSerializer()
+
   class Meta:
 
     model = Course
     fields = ('id', 'name', 'number_of_holes', 'country', 'phone_number',
     'website_link', 'contact_name', 'year_built', 'email_address', 'green_fees', 'ranking', 
     'hero_image', 'description', 'video_highlight_link', 'video_description', 'pro_golfer_img_1', 
-    'pro_golfer_img_2', 'pro_golfer_1_review', 'pro_golfer_2_review', 'course_type', 'scorecard', 'address')
+    'pro_golfer_img_2', 'pro_golfer_1_review', 'pro_golfer_2_review', 'course_type', 'scorecard', 'address', 'coursesholes')
 
 class CourseImageSerializer(serializers.ModelSerializer):
 
@@ -29,7 +31,7 @@ class HoleSerializer(serializers.ModelSerializer):
 
   class Meta:
     model = Hole
-    fields = ('id', 'number', 'video', 'hole_graph', 'bunkers', 'Mens_Par', 'Mens_SI', 'Ladies_Par', 'Ladies_SI','course')
+    fields = ('id', 'number', 'video', 'hole_graph', 'bunkers', 'Mens_Par', 'Mens_SI', 'Ladies_Par', 'Ladies_SI','course', 'holes')
 
 class HoleTeeBoxSerializer(serializers.ModelSerializer):
 
@@ -38,9 +40,19 @@ class HoleTeeBoxSerializer(serializers.ModelSerializer):
     fields = ('id', 'teeboxtype', 'color', 'length', 'hole')
 
 
+class PopulateHoleSerializer(serializers.ModelSerializer):
+
+  course = CourseSerializer()
+  holes = HoleTeeBoxSerializer(many=True)
+
+  class Meta:
+    model = Hole
+    fields = ('id', 'number', 'video', 'hole_graph', 'bunkers', 'Mens_Par', 'Mens_SI', 'Ladies_Par', 'Ladies_SI','course', 'holes')
+
 class PopulateCourseSerializer(serializers.ModelSerializer):
 
   address = AddressSerializer()
+  coursesholes = HoleSerializer(many=True)
 
   class Meta:
 
@@ -48,4 +60,4 @@ class PopulateCourseSerializer(serializers.ModelSerializer):
     fields = ('id', 'name', 'number_of_holes', 'country', 'phone_number',
     'website_link', 'contact_name', 'year_built', 'email_address', 'green_fees', 'ranking', 
     'hero_image', 'description', 'video_highlight_link', 'video_description', 'pro_golfer_img_1', 
-    'pro_golfer_img_2', 'pro_golfer_1_review', 'pro_golfer_2_review', 'course_type', 'scorecard', 'address')
+    'pro_golfer_img_2', 'pro_golfer_1_review', 'pro_golfer_2_review', 'course_type', 'scorecard', 'address', 'coursesholes')
