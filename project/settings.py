@@ -134,6 +134,10 @@ REST_FRAMEWORK = {
         'jwt_auth.authentication.JWTAuthentication',
         'rest_framework.authentication.BasicAuthentication',
     ],
+    'DATE_INPUT_FORMATS': ['iso-8601', '%Y-%m-%dT%H:%M:%S.%fZ'],
 }
 
 AUTH_USER_MODEL = 'jwt_auth.User'
+
+MEDIA_URL =  '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, "media")

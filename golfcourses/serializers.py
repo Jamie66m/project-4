@@ -19,7 +19,7 @@ class CourseSerializer(serializers.ModelSerializer):
     fields = ('id', 'name', 'number_of_holes', 'country', 'phone_number',
     'website_link', 'contact_name', 'year_built', 'email_address', 'green_fees', 'ranking', 
     'hero_image', 'description', 'video_highlight_link', 'video_description', 'pro_golfer_img_1', 
-    'pro_golfer_img_2', 'pro_golfer_1_review', 'pro_golfer_2_review', 'course_type', 'scorecard', 'address', 'coursesholes')
+    'pro_golfer_img_2', 'pro_golfer_1_review', 'pro_golfer_2_review', 'course_type', 'scorecard', 'address', 'coursesholes', 'coursesimages')
 
 class CourseImageSerializer(serializers.ModelSerializer):
 
@@ -53,6 +53,7 @@ class PopulateCourseSerializer(serializers.ModelSerializer):
 
   address = AddressSerializer()
   coursesholes = HoleSerializer(many=True)
+  coursesimages = CourseImageSerializer(many=True)
 
   class Meta:
 
@@ -60,4 +61,4 @@ class PopulateCourseSerializer(serializers.ModelSerializer):
     fields = ('id', 'name', 'number_of_holes', 'country', 'phone_number',
     'website_link', 'contact_name', 'year_built', 'email_address', 'green_fees', 'ranking', 
     'hero_image', 'description', 'video_highlight_link', 'video_description', 'pro_golfer_img_1', 
-    'pro_golfer_img_2', 'pro_golfer_1_review', 'pro_golfer_2_review', 'course_type', 'scorecard', 'address', 'coursesholes')
+    'pro_golfer_img_2', 'pro_golfer_1_review', 'pro_golfer_2_review', 'course_type', 'scorecard', 'address', 'coursesholes', 'coursesimages')

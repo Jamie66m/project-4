@@ -3,6 +3,9 @@ from rest_framework.generics import RetrieveUpdateDestroyAPIView, ListCreateAPIV
 from rest_framework.status import HTTP_201_CREATED, HTTP_422_UNPROCESSABLE_ENTITY, HTTP_202_ACCEPTED, HTTP_204_NO_CONTENT
 
 from rest_framework.response import Response
+from rest_framework.parsers import FileUploadParser
+
+
 
 from rest_framework.exceptions import PermissionDenied
 from rest_framework.permissions import IsAuthenticated, BasePermission
@@ -13,9 +16,11 @@ User = get_user_model()
 
 from .models import GolfBag, UserGolfPhotos, UserCoursePlayed, UserCourseFavourites, UserCourseWishlist, CourseComment, UserHomeCourse
 
+from golfcourses.models import Course
+
 from django.conf import settings
 import jwt
-from .serializers import UserSerializer, PopulatedUserSerializer, UserCourseFavouritesSerializer, UserCoursePlayedSerializer, UserCourseWishListSerializer, UserGolfPhotosSerializer, CourseCommentSerializer, GolfBagSerializer, UserHomeCourseSerializer
+from .serializers import UserSerializer, PopulatedUserSerializer, UserCourseFavouritesSerializer, UserCoursePlayedSerializer, UserCoursePlayedReadSerializer, UserCourseWishListSerializer, UserGolfPhotosSerializer, CourseCommentSerializer, GolfBagSerializer, UserHomeCourseSerializer
 
 
 class RegisterView(APIView):
@@ -50,6 +55,7 @@ class LoginView(APIView):
         return Response({'token': token, 'message': f'Welcome back {user.username}!'})
 
 class UserProfileDetailView(APIView):
+    parser_class = (FileUploadParser,)
     permission_classes = (IsAuthenticated, )
 
     def get(self, request):
@@ -57,15 +63,10 @@ class UserProfileDetailView(APIView):
       serializer = PopulatedUserSerializer(user)
       return Response(serializer.data)
 
-class GolfBagCreateView(ListCreateAPIView):
+class GolfBagCreateView(APIView):
     # queryset = GolfBag.objects.all()
     # serializer_class = GolfBagSerializer
     permission_classes = (IsAuthenticated, )
-
-    def get(self, request):
-      golfbag = GolfBag.objects.get(pk=request.user.id)
-      serializer = GolfBagSerializer(golfbag, many=True)
-      return Response(serializer.data)
 
     def post(self, request):
       request.data['user'] = request.user.id
@@ -75,38 +76,33 @@ class GolfBagCreateView(ListCreateAPIView):
           return Response(golfbag.data, status=HTTP_201_CREATED)
       return Response(golfbag.errors, status=HTTP_422_UNPROCESSABLE_ENTITY)
 
-    # def post(self, request):
-    #   golfbag = GolfBag.objects.create(user_id=request.user.id, pk=request.user.id)
-    #   serializer = GolfBagSerializer(golfbag, data=request.data)
-    #   if serializer.is_valid():
-    #     serializer.save()
-    #     return Response(serializer.data, status=HTTP_201_CREATED)
-    #   return Response(serializer.data, status=HTTP_422_UNPROCESSABLE_ENTITY)
-
-class GolfBagDetailView(RetrieveUpdateDestroyAPIView):
-    queryset = GolfBag.objects.all()
-    serializer_class = GolfBagSerializer
+class GolfBagDetailView(APIView):
     permission_classes = (IsAuthenticated, )
 
-    def get(self, request):
-      golfbag = GolfBag.objects.get(pk=request.user.id)
+    def get(self, request, *args, **kwargs):
+      golfbag = GolfBag.objects.get(id=self.kwargs.get('pk5', ''))
       serializer = GolfBagSerializer(golfbag)
       return Response(serializer.data)
 
-class UserGolfPhotosListView(ListCreateAPIView):
-    queryset = UserGolfPhotos.objects.all()
-    serializer_class = UserGolfPhotosSerializer
+
+class UserGolfPhotosListView(APIView):
+    parser_class = (FileUploadParser,)
     permission_classes = (IsAuthenticated, )
-
-    def get(self, request, pk):
-      usergolfphotos = UserGolfPhotos.objects.filter(user_id=pk)
+    
+    def get(self, request):
+      usergolfphotos = UserGolfPhotos.objects.get(pk=request.user.id)
       serializer = UserGolfPhotosSerializer(usergolfphotos, many=True)
-
       return Response(serializer.data)
 
-class UserGolfPhotosDetailView(RetrieveUpdateDestroyAPIView):
-    queryset = UserGolfPhotos.objects.all()
-    serializer_class = UserGolfPhotosSerializer
+    def post(self, request, args):
+      request.data['user'] = request.user.id
+      usergolfphoto = UserGolfPhotosSerializer(data=request.data)
+      if usergolfphoto.is_valid():
+          usergolfphoto.save()
+          return Response(usergolfphoto.data, status=HTTP_201_CREATED)
+      return Response(usergolfphoto.errors, status=HTTP_422_UNPROCESSABLE_ENTITY)
+
+class UserGolfPhotosDetailView(APIView):
     permission_classes = (IsAuthenticated, )
 
     def get(self, request, pk, *args, **kwargs):
@@ -114,38 +110,27 @@ class UserGolfPhotosDetailView(RetrieveUpdateDestroyAPIView):
       serializer = UserGolfPhotosSerializer(usergolfphoto)
       return Response(serializer.data)
 
-class AllUsersCoursePlayedListView(ListCreateAPIView):
-    queryset = UserCoursePlayed.objects.all()
-    serializer_class = UserCoursePlayedSerializer
+class AllUsersCoursePlayedListView(APIView):
     permission_classes = (IsAuthenticated, )
 
     def get(self, request):
       allcoursesplayed = UserCoursePlayed.objects.all()
-      serializer = UserCoursePlayedSerializer(allcoursesplayed, many=True)
+      serializer = UserCoursePlayedReadSerializer(allcoursesplayed, many=True)
 
       return Response(serializer.data)
 
-class UserCoursePlayedListView(ListCreateAPIView):
-    queryset = UserCoursePlayed.objects.all()
-    serializer_class = UserCoursePlayedSerializer
+class UserCoursePlayedListView(APIView):
     permission_classes = (IsAuthenticated, )
 
-    def get(self, request, pk):
-      allusercourseplayeds = UserCoursePlayed.objects.filter(user_id=pk)
-      serializer = UserCoursePlayedSerializer(allusercourseplayeds, many=True)
-      return Response(serializer.data)
+    def post(self, request):
+      request.data['user'] = request.user.id
+      addusercourseplayed = UserCoursePlayedSerializer(data=request.data)
+      if addusercourseplayed.is_valid():
+          addusercourseplayed.save()
+          return Response(addusercourseplayed.data, status=HTTP_201_CREATED)
+      return Response(addusercourseplayed.errors, status=HTTP_422_UNPROCESSABLE_ENTITY)
 
-    def post(self, request, pk, *args, **kwargs):
-      addcourseplayedbyuser = UserCoursePlayed.objects.create(user_id=pk)
-      serializer = UserCoursePlayedSerializer(addcourseplayedbyuser, data=request.data)
-      if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data, status=HTTP_201_CREATED)
-      return Response(serializer.data, status=HTTP_422_UNPROCESSABLE_ENTITY)
-
-class UserCoursePlayedDetailView(RetrieveUpdateDestroyAPIView):
-    queryset = UserCoursePlayed.objects.all()
-    serializer_class = UserCoursePlayedSerializer
+class UserCoursePlayedDetailView(APIView):
     permission_classes = (IsAuthenticated, )
 
     def get(self, request, pk, *args, **kwargs):
@@ -153,27 +138,18 @@ class UserCoursePlayedDetailView(RetrieveUpdateDestroyAPIView):
       serializer = UserCoursePlayedSerializer(courseplayedbyuser)
       return Response(serializer.data)
 
-class UserCourseWishListListView(ListCreateAPIView):
-    queryset = UserCourseWishlist.objects.all()
-    serializer_class = UserCourseWishListSerializer
+class UserCourseWishListListView(APIView):
     permission_classes = (IsAuthenticated, )
 
-    def get(self, request, pk):
-      allusercoursewishlist = UserCourseWishlist.objects.filter(user_id=pk)
-      serializer = UserCourseWishListSerializer(allusercoursewishlist, many=True)
-      return Response(serializer.data)
+    def post(self, request):
+      request.data['user'] = request.user.id
+      addusercoursewishlist = UserCourseWishListSerializer(data=request.data)
+      if addusercoursewishlist.is_valid():
+          addusercoursewishlist.save()
+          return Response(addusercoursewishlist.data, status=HTTP_201_CREATED)
+      return Response(addusercoursewishlist.errors, status=HTTP_422_UNPROCESSABLE_ENTITY)
 
-    def post(self, request, pk, *args, **kwargs):
-      addcoursewishlistbyuser = UserCourseWishlist.objects.create(user_id=pk)
-      serializer = UserCourseWishListSerializer(addcoursewishlistbyuser, data=request.data)
-      if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data, status=HTTP_201_CREATED)
-      return Response(serializer.data, status=HTTP_422_UNPROCESSABLE_ENTITY)
-
-class UserCourseWishListDetailView(RetrieveUpdateDestroyAPIView):
-    queryset = UserCourseWishlist.objects.all()
-    serializer_class = UserCourseWishListSerializer
+class UserCourseWishListDetailView(APIView):
     permission_classes = (IsAuthenticated, )
 
     def get(self, request, pk, *args, **kwargs):
@@ -181,9 +157,7 @@ class UserCourseWishListDetailView(RetrieveUpdateDestroyAPIView):
       serializer = UserCourseWishListSerializer(coursewishlistbyuser)
       return Response(serializer.data)
 
-class AllUsersCourseFavouritesList(ListCreateAPIView):
-    queryset = UserCourseFavourites.objects.all()
-    serializer_class = UserCourseFavouritesSerializer
+class AllUsersCourseFavouritesList(APIView):
     permission_classes = (IsAuthenticated, )
 
     def get(self, request):
@@ -192,27 +166,18 @@ class AllUsersCourseFavouritesList(ListCreateAPIView):
 
       return Response(serializer.data)
 
-class UserCourseFavouritesListView(ListCreateAPIView):
-    queryset = UserCourseFavourites.objects.all()
-    serializer_class = UserCourseFavouritesSerializer
+class UserCourseFavouritesListView(APIView):
     permission_classes = (IsAuthenticated, )
 
-    def get(self, request, pk):
-      allusercoursefavourites = UserCourseFavourites.objects.filter(user_id=pk)
-      serializer = UserCourseFavouritesSerializer(allusercoursefavourites, many=True)
-      return Response(serializer.data)
+    def post(self, request):
+      request.data['user'] = request.user.id
+      addusercoursefavourite = UserCourseFavouritesSerializer(data=request.data)
+      if addusercoursefavourite.is_valid():
+          addusercoursefavourite.save()
+          return Response(addusercoursefavourite.data, status=HTTP_201_CREATED)
+      return Response(addusercoursefavourite.errors, status=HTTP_422_UNPROCESSABLE_ENTITY)
 
-    def post(self, request, pk, *args, **kwargs):
-      addcoursefavouritebyuser = UserCourseFavourites.objects.create(user_id=pk)
-      serializer = UserCourseFavouritesSerializer(addcoursefavouritebyuser, data=request.data)
-      if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data, status=HTTP_201_CREATED)
-      return Response(serializer.data, status=HTTP_422_UNPROCESSABLE_ENTITY)
-
-class UserCourseFavouritesDetailView(RetrieveUpdateDestroyAPIView):
-    queryset = UserCourseFavourites.objects.all()
-    serializer_class = UserCourseFavouritesSerializer
+class UserCourseFavouritesDetailView(APIView):
     permission_classes = (IsAuthenticated, )
 
     def get(self, request, pk, *args, **kwargs):
@@ -220,41 +185,31 @@ class UserCourseFavouritesDetailView(RetrieveUpdateDestroyAPIView):
       serializer = UserCourseFavouritesSerializer(coursefavouritebyuser)
       return Response(serializer.data)
 
-class UserHomeCourseDetailView(RetrieveUpdateDestroyAPIView):
-    queryset = UserHomeCourse.objects.all()
-    serializer_class = UserHomeCourseSerializer
+class UserHomeCourseDetailView(APIView):
     permission_classes = (IsAuthenticated, )
 
-    def post(self, request, pk, *args, **kwargs):
-      userhomecourse = UserHomeCourse.objects.create(user_id=pk)
-      serializer = UserHomeCourseSerializer(userhomecourse, data=request.data)
-      if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data, status=HTTP_201_CREATED)
-      return Response(serializer.data, status=HTTP_422_UNPROCESSABLE_ENTITY)
+    def post(self, request):
+      request.data['user'] = request.user.id
+      addusercoursehome = UserHomeCourseSerializer(data=request.data)
+      if addusercoursehome.is_valid():
+          addusercoursehome.save()
+          return Response(addusercoursehome.data, status=HTTP_201_CREATED)
+      return Response(addusercoursehome.errors, status=HTTP_422_UNPROCESSABLE_ENTITY)
 
 
-class CourseCommentListView(ListCreateAPIView):
-    queryset = CourseComment.objects.all()
-    serializer_class = CourseCommentSerializer
+class CourseCommentListView(APIView):
     permission_classes = (IsAuthenticated, )
-
-    def get(self, request, pk, *args, **kwargs):
-      coursecomments = CourseComment.objects.filter(course_id=pk)
-      serializer = CourseCommentSerializer(coursecomments, many=True)
-      return Response(serializer.data)
-
+    
     def post(self, request, pk, *args, **kwargs):
-      addcoursecommentbyuser = CourseComment.objects.create(user_id=pk)
-      serializer = CourseCommentSerializer(addcoursecommentbyuser, data=request.data)
-      if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data, status=HTTP_201_CREATED)
-      return Response(serializer.data, status=HTTP_422_UNPROCESSABLE_ENTITY)
+      request.data['user'] = request.user.id
+      coursecomment = Course.objects.get(id=pk)
+      addusercoursecomment = CourseCommentSerializer(data=request.data)
+      if addusercoursecomment.is_valid():
+          addusercoursecomment.save()
+          return Response(addusercoursecomment.data, status=HTTP_201_CREATED)
+      return Response(addusercoursecomment.errors, status=HTTP_422_UNPROCESSABLE_ENTITY)
 
-class CourseCommentDetailView(RetrieveUpdateDestroyAPIView):
-    queryset = CourseComment.objects.all()
-    serializer_class = CourseCommentSerializer
+class CourseCommentDetailView(APIView):
     permission_classes = (IsAuthenticated, )
 
 

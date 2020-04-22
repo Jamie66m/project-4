@@ -29,7 +29,7 @@ const App = () => (
       <Route path="/login" component={Login} />
       <Route exact path="/birdie_time_user_home" component={BirdieTimeUserHome} />
       <Route exact path="/course/:id" component={CourseDetailedPage} />
-      <Route path="/course/:id/holes" component={CourseAllHoles} />
+      <Route exact path="/course/:id/holes" component={CourseAllHoles} />
       <Route path="/course/:id/holes/:id" component={CourseHoleDetailedPage} />
       <Route exact path = "/profile" component={UserProfile} />
     </Switch>

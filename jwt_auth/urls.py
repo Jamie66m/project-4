@@ -7,7 +7,7 @@ urlpatterns = [
     path('login', LoginView.as_view()),
     path('profile/', UserProfileDetailView.as_view()),
     path('profile/golfbag', GolfBagCreateView.as_view()),
-    path('profile/golfbag/<int:pk>', GolfBagDetailView.as_view()),
+    path('profile/golfbag/<int:pk5>', GolfBagDetailView.as_view()),
     path('profile/photos', UserGolfPhotosListView.as_view()),
     path('profile/photos/<int:pk6>', UserGolfPhotosDetailView.as_view()),
     path('allcoursesplayed', AllUsersCoursePlayedListView.as_view()),

@@ -8,7 +8,7 @@ class UserProfile extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      users: null,
+      user: null,
       userHomeCourse: null,
       userGolfBag: null
     }
@@ -17,10 +17,10 @@ class UserProfile extends React.Component {
   componentDidMount() {
     // const userId = this.props.match.params.id
     console.log(this.state)
-    axios.get('/api/profiles')
+    axios.get('/api/profile', { headers: { Authorization: `Bearer ${auth.getToken()}` } })
       .then(res => {
         console.log(res.data)
-        this.setState({ users: res.data })
+        this.setState({ user: res.data })
       })
       .catch(err => this.setState({ error: err.response.data.message }))
   }
@@ -28,12 +28,14 @@ class UserProfile extends React.Component {
   render() {
     if (!this.state.user) return <h1>WAITING FOR USER</h1>
     console.log(this.state.user)
+
+    const user = this.state.user
+    // const coursesplayed = this.state.user.usercourseplayed
     return <div>
-      {this.state.users.map((user, index) => {
-
-        <h1 key={index}>{user.firstname}</h1>
-
-      })}
+      <h1>{user.username}</h1>
+      {/* {coursesplayed.map((courseplayed, index) => {
+        return <h1 key={index}>{courseplayed.</h1>
+      })} */}
     </div>
   }
 }

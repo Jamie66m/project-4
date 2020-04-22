@@ -1,4 +1,4 @@
-from rest_framework import serializers
+from rest_framework import serializers, fields
 
 from django.contrib.auth import get_user_model
 User = get_user_model()
@@ -62,37 +62,54 @@ class UserHomeCourseSerializer(serializers.ModelSerializer):
 
 class UserCoursePlayedSerializer(serializers.ModelSerializer):
 
-    course = CourseSerializer(many=True)
-    user = UserSerializer()
+    # course = CourseSerializer(read_only=True)
+    # user = UserSerializer()
+    time = fields.DateField(input_formats=['%Y-%m-%d'])
 
     class Meta:
       model = UserCoursePlayed
       fields = ('id', 'rating', 'score', 'time', 'course', 'user')
 
+class UserCoursePlayedReadSerializer(UserCoursePlayedSerializer):
+    course = CourseSerializer(many=True)
+    user = UserSerializer(read_only=True)
+
 class UserCourseWishListSerializer(serializers.ModelSerializer):
 
-    course = CourseSerializer(many=True)
+    # course = CourseSerializer(many=True)
 
     class Meta:
       model = UserCourseWishlist
       fields = ('id', 'course', 'user')
 
+class UserCourseWishlistReadSerializer(UserCourseWishListSerializer):
+    course = CourseSerializer(many=True)
+    user = UserSerializer(read_only=True)
+
 class UserCourseFavouritesSerializer(serializers.ModelSerializer):
 
-    course = CourseSerializer(many=True)
-    user = UserSerializer()
+    # course = CourseSerializer(many=True)
+    # user = UserSerializer()
 
     class Meta:
       model = UserCourseFavourites
       fields = ('id', 'course', 'user')
 
+class UserCourseWishlistReadSerializer(UserCourseFavouritesSerializer):
+    course = CourseSerializer(many=True)
+    user = UserSerializer(read_only=True)
+
 class CourseCommentSerializer(serializers.ModelSerializer):
 
-    course = CourseSerializer()
+    # course = CourseSerializer()
 
     class Meta:
       model = CourseComment
       fields = ('id', 'comment', 'created_at', 'course', 'user')
+
+class CourseCommentReadSerializer(CourseCommentSerializer):
+    course = CourseSerializer()
+    user = UserSerializer(read_only=True)
 
 class PopulatedUserSerializer(serializers.ModelSerializer):
 
@@ -116,7 +133,12 @@ class PopulatedUserSerializer(serializers.ModelSerializer):
         return data
 
     usergolfbag = GolfBagSerializer(many=True)  
+    usergolfphotos = UserGolfPhotosSerializer(many=True)
+    usercourseplayed = UserCoursePlayedReadSerializer(many=True)
+    usercoursewishlist = UserCourseWishlistReadSerializer(many=True)
+    usercoursefavourites = UserCourseWishlistReadSerializer(many=True)
+    usercoursecomments = CourseCommentReadSerializer(many=True)
       
     class Meta:
       model = User
-      fields = ('id','username', 'email', 'password', 'password_confirmation', 'first_name', 'last_name', 'user_bio', 'handicap', 'profileimage', 'video_of_swing', 'usergolfbag')
+      fields = ('id','username', 'email', 'password', 'password_confirmation', 'first_name', 'last_name', 'user_bio', 'handicap', 'profileimage', 'video_of_swing', 'usergolfbag', 'usergolfphotos', 'usercourseplayed', 'usercoursewishlist', 'usercoursefavourites', 'usercoursecomments')

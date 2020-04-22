@@ -19,9 +19,7 @@ class Navbar extends React.Component {
     const isLoggedIn = auth.isLoggedIn()
     return <nav className="navbar" role="navigation" aria-label="main navigation">
       <div className="navbar-brand">
-        <a className="navbar-item" href="/">
-          Birdie Golf
-        </a>
+        <h1 className="navbar-item">Birdie Time</h1>
 
         <a role="button"
           className={`navbar-burger burger ${this.state.navMobileOpen ? 'is-active' : ''}`}

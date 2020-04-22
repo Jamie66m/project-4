@@ -1,6 +1,6 @@
 // Main Home
 * {
-  font-family: 'Raleway', sans-serif;
+  font-family: 'Poppins', sans-serif;
 }
 
 .mainNonUserHome {
@@ -42,6 +42,170 @@
 
 
 // User Home
+.mainUserHome {
+  height: 200vh;
+  width: 100vw;
+  border: 2px solid red;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  .mainUserHomeCoursesContainer {
+    height: 100%;
+    width: 73%;
+    border: 2px solid blue;
+    display: flex;
+    flex-direction: column;
+
+    .mainUserHomeCoursesHeader {
+      height: 10%;
+      width: 100%;
+      border: 2px solid green;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      .DropDownsContainer {
+        height: 100%;
+        width: 50%;
+        border: 2px solid pink;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-evenly;
+      }
+    
+      .mainUserHomeCoursesHeaderSearchBar {
+        height: 100%;
+        width: 50%;
+        border: 2px solid pink;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: center;
+
+        .BirdieUserHomeSearchForm {
+          height: 100%;
+          width: 100%;
+          border: 2px solid gold;
+          display: flex;
+          flex-direction: row;
+          align-items: center;
+          justify-content: center;
+
+          #BirdieUserHomeSearchFormBar{
+            width: 80%;
+          }
+        }
+      }
+    }
+    .MediaGalleryandCoursesContainer {
+      height: 100%;
+      width: 100%;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      .coursesMediaGallery {
+        height: 100%;
+        width: 20;
+        border: 2px solid black;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .showAllTheCourses {
+        height: 100%;
+        width: 68%;
+        border: 2px solid black;
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+
+        .CourseCardContainer {
+          width: 45%;
+          height: 22%;
+          border-top: 3px solid rgb(155, 103, 36);
+          background-color: rgb(249, 250, 250);
+          padding: 0px;
+          margin: 0px 20px 10px 13px;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+          box-shadow: 0px 3px 15px rgba(0,0,0,0.3);
+
+          .CourseCardImageContainer {
+            width: 100%;
+            height: 50%;
+            border: 2px solid orange;
+
+            .CourseHeroImageContainer {
+              width: 100%;
+              height: 100%;
+
+             .CourseHeroImage {
+               width: 100%;
+               height: 100%;
+            }
+           }
+          }
+          .CourseCardInfoContainer {
+            width: 100%;
+            height: 30%;
+            border: 2px solid blue;
+            padding-left: 5px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+
+            .CourseCardInfoTitle {
+              font-weight: bold;
+              font-size: 15px;
+            }
+            .CourseCardInfoRanking {
+              font-size: 25px;
+            }
+          }
+
+          .CourseCardButtonContainer {
+            width: 100%;
+            height: 20%;
+            border: 2px solid green;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            background-color: rgb(229, 250, 231);
+
+            .CourseCardButton {
+              padding: 10px;
+              border-radius: 3px;
+              background-color: rgb(155, 103, 36);
+              color: rgb(236, 229, 229);
+              font-weight: bold;
+            }
+            .CourseCardButton:hover {
+              background-color: rgb(89, 218, 85);
+              cursor: pointer;
+              text-decoration: double;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .UserStatsContainer {
+    height: 100%;
+    width: 25%;
+    border: 2px solid blue;
+    display: flex;
+    flex-direction: column;
+  }
+
+}
+
+
 
 // Navbar
 
@@ -118,3 +282,843 @@
     opacity: 0.8;
   }
 }
+
+
+
+// Course Detailed Page
+.mainCourseDetailedPage {
+  height: 270vh;
+  width: 100vw;
+  // border: 2px solid red;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  .mainCourseDetailedPageTitleandRating {
+    height: 6%;
+    width: 93%;
+    // border: 2px solid gold;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0 auto;
+
+    .NameandRankingTitle {
+      font-size: 30px;
+      font-weight: bold;
+    }
+
+    .RankingTitle {
+      padding-left: 5px;
+    }
+  }
+  .mainCourseDetailedPageImageandUsefulInfo {
+    height: 12%;
+    width: 93%;
+    display: flex;
+    flex-direction: row;
+    border: 2px solid blue;
+    align-items: flex-start;
+    margin: 0 auto;
+
+    .mainCourseDetailedPageFigureImage {
+      height: 100%;
+      width: 35%;
+      // border: 2px solid green;
+
+      .mainCourseDetailedPageImage {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .UserAddsCourseandInfoContainer {
+      width: 100%;
+      height: 100%;
+      // border: 2px solid red;
+      display: flex;
+      flex-direction: column;
+
+      .mainCourseDetailedPageUsefulInfo {
+        width: 100%;
+        height: 65%;
+        // border: 2px solid blue;
+        display: flex;
+        flex-direction: column;
+        padding-left: 30px;
+        align-items: flex-start;
+        justify-content: flex-start;
+  
+        .UsefulInfoTitle {
+          font-weight: bold;
+        }
+      }
+      .UserAddsCourse {
+        width: 100%;
+        height: 35%;
+        border: 2px solid black;
+        padding-left: 30px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+
+        .UserAddsCourseButton {
+          padding: 15px;
+          border-radius: 3px;
+          background-color: rgb(96, 138, 93);
+          color: rgb(236, 229, 229);
+          font-weight: bold;
+        }
+      }
+    }
+  }
+
+  .AddCoursePlayedFormContainer {
+    width: 93%;
+    height: 15%;
+    // border: 2px solid blue;
+    // display: none;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    display: none;
+
+    .AddCoursePlayedForm {
+      width: 34%;
+      height: 100%;
+      // border: 2px solid red;
+      background-color: yellowgreen;
+      margin-left: 350px;
+      display: none;
+   
+
+        .form {
+          width: 100%;
+          height: 100%;
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          justify-content: space-evenly;
+        }
+      .addcoursebutton {
+        background-color: rgb(96, 138, 93);
+        color: white;
+      }
+    }
+  }
+
+  .CourseDetailedPageHoles {
+    width: 93%;
+    height: 2.5%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px auto 0;
+    // border: 2px solid green;
+    
+    .AllHolesContainer {
+      height: 100%;
+      width: 8%;
+      // border: 2px solid black;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      background-color: rgb(238, 231, 231);
+
+    .AllHoles {
+      color: rgb(101, 212, 101);
+      font-weight: bold;
+    }
+
+    .AllHoles:hover {
+      color: rgb(12, 12, 12);
+      font-weight: bold;
+    }
+  }
+
+    .CourseDetailedPageSingularHoles {
+      width: 90%;
+      height: 100%;
+      // border: 2px solid red;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+      background-color: rgb(238, 231, 231);
+      
+
+      .CourseDetailedPageSingularHole {
+        color: rgb(101, 212, 101);
+        font-weight: bold;
+      }
+
+      .CourseDetailedPageSingularHole:hover {
+        color: rgb(12, 12, 12);
+        font-weight: bold;
+      }
+    }
+  }
+  .CourseDetailedPageInfoContainer {
+    width: 93%;
+    height: 17%;
+    // border: 2px solid blue;
+    margin: 20px auto 0;
+    display: flex;
+    flex-direction: row;
+
+    .CourseDetailedPageInfoStats {
+      width: 50%;
+      height: 100;
+      // border: 2px solid red;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+      background-color: rgb(248, 244, 244);
+      
+      .CourseDetailedPageInfoTheStats {
+        width: 98%;
+        height: 17%;
+        // border: 2px solid blue;
+        display: flex;
+        flex-direction: row;
+        align-items: flex-end;
+        margin: 0 auto;
+
+        .StatTitle {
+          width: 50%;
+          height: 100%;
+          // border: 2px solid orange;
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-start;
+          align-items: flex-end;
+          padding-left: 5px;
+
+          .StatInfoTitle {
+            font-weight: bold;
+          }
+        }
+      }
+    }
+
+    .CourseDetailedPageInfoDescription {
+      width: 50%;
+      height: 100;
+      // border: 2px solid red;
+      // justify-content: center;
+      // align-items: center;
+
+      .TheCourseDescription {
+        width: 95%;
+        height: 100%;
+        margin: 0 auto;
+        border: 2px solid black;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+
+        .TheCourseDescriptionDetail {
+          font-style: italic;
+        }
+      }
+    }
+  }
+
+  .CourseDetailedPageBigImageContainer {
+    width: 93%;
+    height: 30%;
+    // border: 2px solid blue;
+    margin: 20px auto;
+
+
+    .CourseDetailedPageBigImage {
+      width: 100%;
+      height: 100%;
+
+      .CourseDetailedPageTheBigImage {
+        height: 100%;
+        width: 100%;
+      }
+    }
+  }
+
+  .GalleryandCommentsContainer {
+    width: 93%;
+    height: 34%;
+    // border: 2px solid green;
+    margin: 5px auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .CourseDetailedPageMediaGallery {
+      width: 30%;
+      height: 100%;
+      // border: 2px solid red;
+      display: flex;
+      flex-direction: column;
+
+      .CourseMediaGalleryTitle {
+        font-weight: bold;
+        text-decoration: underline;
+      }
+
+      .CourseDetailedPageVideo {
+        width: 100%;
+        height: 50%;
+        // border: 2px solid blue;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+
+        .CourseDetailedPageTheVideo {
+          width: 100%;
+          height: 100%;
+        }
+      }
+
+      .CourseDetailedPagePhotos {
+        width: 100%;
+        height: 50%;
+        // border: 2px solid blue;
+        margin-top: 10px;
+
+        .CourseDetailedPageThePhotos {
+          width: 100%;
+          height: 100%;
+          .CarouselImg{
+            width: 390px;
+            height: 240px;
+          }
+        }
+      }
+    }
+
+    .CommentsandPlayerReviewsContainer {
+      width: 68%;
+      height: 100%;
+      border: 2px solid red;
+      display: flex;
+      flex-direction: column;
+      
+      .Comments {
+        width: 100%;
+        height: 60%;
+        border: 2px solid brown;
+        display: flex;
+        flex-direction: row;
+
+        .allCourseCommentsContainer {
+          width: 50%;
+          height: 100%;
+          border: 2px solid grey;
+          display: flex;
+          flex-direction: column;
+          background-color: rgb(57, 124, 57);
+
+          .CourseCommentTitle {
+            color: rgb(7, 7, 7);
+            font-weight: bold;
+          }
+
+          .allTheComments {
+            width: 85%;
+            height: 90%;
+            background-color: rgb(110, 201, 110);
+          }
+        }
+
+        .addCourseComment {
+          width: 50%;
+          height: 100%;
+          background-color: rgb(218, 214, 214);
+
+          .textarea {
+            width: 50px;
+            height: 100px;
+            margin: 46px auto;
+          }
+        }
+      }
+
+      .PlayerReviews {
+        width: 100%;
+        height: 40%;
+        border: 2px solid brown;
+        display: flex;
+        flex-direction: column;
+
+        .PlayerReviewsTitle {
+          font-weight: bold;
+          text-decoration: underline;
+        }
+
+        .PlayerReviewsContainer {
+          width: 100%;
+          height: 90%;
+          display: flex;
+          flex-direction: row;
+        
+        
+        .PlayerReview1 {
+          width: 50%;
+          height: 100%;
+          border: 2px solid gold;
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-start;
+          // align-items: center;
+
+          .PlayerReview1Fig {
+            width: 50%;
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+
+            .PlayerReview1Img {
+              width: 95%;
+              height: 95%;
+            }
+          }
+
+          .PlayerReview1Info {
+            width: 50%;
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            border: 2px solid black;
+          }
+        }
+
+        .PlayerReview2 {
+          width: 50%;
+          height: 100%;
+          // border: 2px solid gold;
+          display: flex;
+          flex-direction: row;
+          justify-content: space-around;
+
+          .PlayerReview2Fig {
+            width: 50%;
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+
+            .PlayerReview2Img {
+              width: 95%;
+              height: 95%;
+            }
+          }
+
+          .PlayerReview2Info {
+            width: 50%;
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+          }
+        }
+      }
+    }
+    }
+  }
+}
+
+
+// Course All Holes
+
+.MainCourseAllHolesContainer {
+  height: 190vh;
+  width: 100vw;
+  border: 2px solid red;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  .MainCourseAllHolesContainer{    
+  height: 8%;
+  width: 93%;
+  border: 2px solid gold;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0 auto;
+
+    .NameandRankingTitle {
+    font-size: 30px;
+    font-weight: bold;
+    }
+
+    .RankingTitle {
+    padding-left: 5px;
+    }
+  }
+
+  .mainCourseAllHolesPageImageandUsefulInfo {
+    height: 14%;
+    width: 93%;
+    display: flex;
+    flex-direction: row;
+    // border: 2px solid blue;
+    align-items: flex-start;
+    margin: 0 auto;
+
+    .mainCourseAllHolesFigureImage {
+      height: 100%;
+      width: 35%;
+      // border: 2px solid green;
+
+      .mainCourseAllHolesImage {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .UserAddsCourseandInfoContainer {
+      width: 100%;
+      height: 100%;
+      border: 2px solid red;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      .mainCourseAllHolesUsefulInfo {
+        width: 100%;
+        height: 65%;
+        // border: 2px solid blue;
+        display: flex;
+        flex-direction: column;
+        padding-left: 30px;
+        align-items: flex-start;
+        justify-content: flex-start;
+  
+        .UsefulInfoTitle {
+          font-weight: bold;
+        }
+      }
+    }
+  } 
+
+  .CourseAllHolesHoles {
+    width: 93%;
+    height: 3%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    margin: 10px auto 0;
+    // border: 2px solid green;
+    
+    .AllHolesContainer {
+      height: 100%;
+      width: 8%;
+      // border: 2px solid black;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      background-color: rgb(238, 231, 231);
+
+    .AllHoles {
+      color: rgb(101, 212, 101);
+      font-weight: bold;
+    }
+
+    .AllHoles:hover {
+      color: rgb(12, 12, 12);
+      font-weight: bold;
+    }
+  }
+
+    .CourseAllHolesSingularHoles {
+      width: 90%;
+      height: 100%;
+      // border: 2px solid red;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+      background-color: rgb(238, 231, 231);
+      
+
+      .CourseAllHolesSingularHole {
+        color: rgb(101, 212, 101);
+        font-weight: bold;
+      }
+
+      .CourseAllHolesSingularHole:hover {
+        color: rgb(12, 12, 12);
+        font-weight: bold;
+      }
+    }
+  }
+
+  .CourseAllHolesContainer {
+    width: 93%;
+    height: 75%;
+    border: 2px solid black;
+    margin: 10px auto 0;
+    display: flex;
+    flex-direction: column;
+
+    .CourseAllHolesOutTitle {
+      font-size: 30px;
+      font-weight: bold;
+      text-decoration: underline;
+    }
+
+    .CourseAllHolesOutContainer {
+      width: 100%;
+      height: 50%;
+      border: 2px solid blue;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+
+      .CourseOutHoles {
+        width: 20%;
+        border: 2px solid red;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+
+        .CourseOutHolesInfo {
+          width: 100%;
+          height: 20%;
+          border: 2px solid green;
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-start;
+          align-items: center;
+
+          .CourseOutHolesNumber {
+            color: green;
+            font-weight: bold;
+            font-size: 20px;
+          }
+
+          .CourseOutHolesInfoStats {
+            width: 80%;
+            height: 100%;
+            margin-left: 10px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-evenly;
+          }
+        }
+
+        .CourseOutHolesNoGraph {
+          width: 100%;
+          height: 80%;
+          border: 2px solid yellow;
+         
+
+          .CourseOutHolesNoGraphFig {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+
+            .CourseOutHolesNoGraphImg {
+              width: 100px;
+              height: 100px;
+            }
+          }
+        }
+      }
+
+      .CourseOutHolesWithTheGraph {
+        width: 20%;
+        border: 2px solid red;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+
+        .CourseOutHolesInfo {
+          width: 100%;
+          height: 20%;
+          border: 2px solid green;
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-start;
+          align-items: center;
+
+          .CourseOutHolesNumber {
+            color: green;
+            font-weight: bold;
+            font-size: 20px;
+          }
+
+          .CourseOutHolesInfoStats {
+            width: 80%;
+            height: 100%;
+            margin-left: 10px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-evenly;
+          }
+        }
+
+        .CourseOutHolesWithGraph {
+          width: 100%;
+          height: 80%;
+          border: 2px solid yellow;
+          background-color: rgb(206, 206, 206);
+         
+
+          .CourseOutHolesWithGraphFig {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+
+            .CourseOutHolesWithGraphImg {
+              width: 200px;
+              height: 170px;
+              
+            }
+          }
+        }
+      }
+    }
+
+    .CourseAllHolesInTitle {
+      font-size: 30px;
+      font-weight: bold;
+      text-decoration: underline;
+    }
+
+    .CourseAllHolesInContainer {
+      width: 100%;
+      height: 50%;
+      border: 2px solid blue;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+
+      .CourseInHoles {
+        width: 20%;
+        border: 2px solid red;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+
+        .CourseInHolesInfo {
+          width: 100%;
+          height: 20%;
+          border: 2px solid green;
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-start;
+          align-items: center;
+
+          .CourseInHolesNumber {
+            color: green;
+            font-weight: bold;
+            font-size: 20px;
+          }
+
+          .CourseInHolesInfoStats {
+            width: 80%;
+            height: 100%;
+            margin-left: 10px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-evenly;
+          }
+        }
+
+        .CourseInHolesNoGraph {
+          width: 100%;
+          height: 80%;
+          border: 2px solid yellow;
+         
+
+          .CourseInHolesNoGraphFig {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+
+            .CourseInHolesNoGraphImg {
+              width: 100px;
+              height: 100px;
+            }
+          }
+        }
+      }
+
+      .CourseInHolesWithTheGraph {
+        width: 20%;
+        border: 2px solid red;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+
+        .CourseInHolesInfo {
+          width: 100%;
+          height: 20%;
+          border: 2px solid green;
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-start;
+          align-items: center;
+
+          .CourseInHolesNumber {
+            color: green;
+            font-weight: bold;
+            font-size: 20px;
+          }
+
+          .CourseInHolesInfoStats {
+            width: 80%;
+            height: 100%;
+            margin-left: 10px;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            justify-content: space-evenly;
+          }
+        }
+
+        .CourseInHolesWithGraph {
+          width: 100%;
+          height: 80%;
+          border: 2px solid yellow;
+          background-color: rgb(206, 206, 206);
+          
+          .CourseInHolesWithGraphFig {
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+
+            .CourseInHolesWithGraphImg {
+              width: 200px;
+              height: 170px;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+

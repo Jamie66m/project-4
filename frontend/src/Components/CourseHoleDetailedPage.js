@@ -15,7 +15,7 @@ class CourseHoleDetailedPage extends React.Component {
   componentDidMount() {
     const courseId = this.props.match.params.id
     const holeId = this.props.match.params.id
-    console.log()
+    console.log(this.props)
     axios.get(`/api/golfcourses/courses/${courseId}/holes/${holeId}`, { headers: { Authorization: `Bearer ${auth.getToken()}` } })
       .then(res => {
         console.log(res.data)
@@ -28,9 +28,9 @@ class CourseHoleDetailedPage extends React.Component {
     if (!this.state.hole) return <h1>WAITING FOR HOLE</h1>
     console.log(this.state.hole)
     const hole = this.state.hole
-
     return <div>
       <h1>{hole.number}</h1>
+      <img src={hole.hole_graph} alt=""/>
     </div>
   }
 }
