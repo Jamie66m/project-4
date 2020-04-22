@@ -13,7 +13,7 @@ class BirdieTimeUserHome extends React.Component {
       courses: [],
       filteredCourses: [],
       userscoursesplayed: [],
-      userscourseswishlist: [],
+      userscoursefavourites: [],
       query: ''
     }
   }
@@ -30,6 +30,13 @@ class BirdieTimeUserHome extends React.Component {
       .then(res => {
         console.log(res.data)
         this.setState({ userscoursesplayed: res.data })
+      })
+      .catch(err => this.setState({ error: err.response.data.message }))
+
+    axios.get('/api/allcoursefavourites', { headers: { Authorization: `Bearer ${auth.getToken()}` } })
+      .then(res => {
+        console.log(res.data)
+        this.setState({ userscoursefavourites: res.data })
       })
       .catch(err => this.setState({ error: err.response.data.message }))
   }
@@ -58,6 +65,22 @@ class BirdieTimeUserHome extends React.Component {
         }
       })
     this.setState({ filteredCourses: filterCourses })
+  }
+
+  CourseTypeFilter(event) {
+    const coursetype = event.target.innerHTML
+    console.log(coursetype)
+    const courses = this.state.courses
+    console.log(courses)
+    const filterCourseType = courses
+      .filter(course => {
+        if (coursetype === 'All') {
+          return course
+        } else {
+          return course.course_type === coursetype
+        }
+      })
+    this.setState({ filteredCourses: filterCourseType })
   }
 
 
@@ -110,7 +133,10 @@ class BirdieTimeUserHome extends React.Component {
                   </button>
                 </div>
                 <div className="dropdown-menu" id="dropdown-menu" role="menu">
-                  <div className="dropdown-content">
+                  <div className="dropdown-content" onClick={() => this.CourseTypeFilter(event)}>
+                    <a className="dropdown-item">
+                      All
+                    </a>
                     <a className="dropdown-item">
                       Links
                     </a>
@@ -137,7 +163,7 @@ class BirdieTimeUserHome extends React.Component {
         </div>
         <div className="MediaGalleryandCoursesContainer">
           <section className="coursesMediaGallery">
-            <h1>MEDIA GALLERY</h1>
+            <h1 className="HomeMediaGalleryTitle">MEDIA GALLERY</h1>
             {this.state.courses.map((course, index) => {
               return <div className="courseVideoHiglight" key={index}>
                 <iframe src={course.video_highlight_link}></iframe>
@@ -157,14 +183,27 @@ class BirdieTimeUserHome extends React.Component {
         </div>
       </section>
       <section className="UserStatsContainer">
-        {this.state.userscoursesplayed.map((courseplayed, index) => {
-          return <div key={index}>
-            <h1>{courseplayed.user.username}</h1>
-            <h1>{courseplayed.score}</h1>
-          </div>
-        })}
+        <div className="UserCoursePlayedStats">
+          <h1 className="UserCoursePlayedTitle">MOST RECENT USER COURSES PLAYED</h1>
+          {this.state.userscoursesplayed.slice(0, 10).map((courseplayed, index) => {
+            return <div key={index} className="UserCoursePlayedInfo">
+              <p><strong>Username:</strong> {courseplayed.user.username}</p>
+              <p><strong>Course:</strong> {courseplayed.course[0].name}</p>
+              <p><strong>Round Score:</strong> {courseplayed.score}</p>
+            </div>
+          })}
+        </div>
+        <div className="UserCourseWishListStats">
+          <h1 className="UserWishListTitle">MOST RECENT COURSES ADDED TO USERS FAVOURITES</h1>
+          {this.state.userscoursefavourites.slice(0, 10).map((coursefavourites, index) => {
+            return <div key={index} className="UserWishListInfo">
+              <p><strong>Username:</strong> {coursefavourites.user.username}</p>
+              <p><strong>Course:</strong> {coursefavourites.course[0].name}</p>
+            </div>
+          })}
+        </div>
       </section>
-    </main >
+    </main>
   }
 }
 

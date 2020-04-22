@@ -20,7 +20,7 @@ from golfcourses.models import Course
 
 from django.conf import settings
 import jwt
-from .serializers import UserSerializer, PopulatedUserSerializer, UserCourseFavouritesSerializer, UserCoursePlayedSerializer, UserCoursePlayedReadSerializer, UserCourseWishListSerializer, UserGolfPhotosSerializer, CourseCommentSerializer, GolfBagSerializer, UserHomeCourseSerializer
+from .serializers import UserSerializer, PopulatedUserSerializer, UserCourseFavouritesReadSerializer, UserCourseFavouritesSerializer, UserCoursePlayedSerializer, UserCoursePlayedReadSerializer, UserCourseWishListSerializer, UserGolfPhotosSerializer, CourseCommentSerializer, GolfBagSerializer, UserHomeCourseSerializer
 
 
 class RegisterView(APIView):
@@ -62,6 +62,14 @@ class UserProfileDetailView(APIView):
       user = User.objects.get(pk=request.user.id)
       serializer = PopulatedUserSerializer(user)
       return Response(serializer.data)
+
+    def put(self, request):
+      request.data['user'] = request.user.id
+      user = PopulatedUserSerializer(data=request.data)
+      if user.is_valid():
+          user.save()
+          return Response(user.data, status=HTTP_201_CREATED)
+      return Response(user.errors, status=HTTP_422_UNPROCESSABLE_ENTITY)
 
 class GolfBagCreateView(APIView):
     # queryset = GolfBag.objects.all()
@@ -162,7 +170,7 @@ class AllUsersCourseFavouritesList(APIView):
 
     def get(self, request):
       allcoursefavourites = UserCourseFavourites.objects.all()
-      serializer = UserCourseFavouritesSerializer(allcoursefavourites, many=True)
+      serializer = UserCourseFavouritesReadSerializer(allcoursefavourites, many=True)
 
       return Response(serializer.data)
 

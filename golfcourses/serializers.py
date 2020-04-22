@@ -2,12 +2,20 @@ from rest_framework import serializers
 
 from .models import Address, Course, CourseImage, Hole, HoleTeeBox
 
+from jwt_auth.models import CourseComment
+
 class AddressSerializer(serializers.ModelSerializer):
 
   class Meta:
 
     model = Address
     fields = ('id', 'address_line_1', 'address_line_2', 'town', 'county', 'postcode')
+
+class PopulateCourseCommentSerializer(serializers.ModelSerializer):
+
+    class Meta:
+      model = CourseComment
+      fields = ('id', 'comment', 'created_at', 'course', 'user')
 
 class CourseSerializer(serializers.ModelSerializer):
 
@@ -54,6 +62,7 @@ class PopulateCourseSerializer(serializers.ModelSerializer):
   address = AddressSerializer()
   coursesholes = HoleSerializer(many=True)
   coursesimages = CourseImageSerializer(many=True)
+  coursecomments = PopulateCourseCommentSerializer(many=True)
 
   class Meta:
 
@@ -61,4 +70,4 @@ class PopulateCourseSerializer(serializers.ModelSerializer):
     fields = ('id', 'name', 'number_of_holes', 'country', 'phone_number',
     'website_link', 'contact_name', 'year_built', 'email_address', 'green_fees', 'ranking', 
     'hero_image', 'description', 'video_highlight_link', 'video_description', 'pro_golfer_img_1', 
-    'pro_golfer_img_2', 'pro_golfer_1_review', 'pro_golfer_2_review', 'course_type', 'scorecard', 'address', 'coursesholes', 'coursesimages')
+    'pro_golfer_img_2', 'pro_golfer_1_review', 'pro_golfer_2_review', 'course_type', 'scorecard', 'address', 'coursesholes', 'coursesimages', 'coursecomments')

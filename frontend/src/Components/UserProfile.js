@@ -2,6 +2,7 @@ import React from 'react'
 import axios from 'axios'
 import auth from '../lib/auth'
 import { Link } from 'react-router-dom'
+import Slider from 'react-slick'
 
 class UserProfile extends React.Component {
 

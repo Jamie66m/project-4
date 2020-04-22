@@ -50,15 +50,15 @@ class UserGolfPhotosSerializer(serializers.ModelSerializer):
       fields = ('id', 'image', 'user')
 
 class UserHomeCourseSerializer(serializers.ModelSerializer):
-
-    course = CourseSerializer()
-    user = UserSerializer()
-
+    
     class Meta:
 
       model = UserHomeCourse
       fields = ('id', 'course', 'user')
 
+class UserHomeCourseReadSerializer(UserHomeCourseSerializer):
+    course = CourseSerializer()
+    user = UserSerializer(read_only=True)
 
 class UserCoursePlayedSerializer(serializers.ModelSerializer):
 
@@ -76,8 +76,6 @@ class UserCoursePlayedReadSerializer(UserCoursePlayedSerializer):
 
 class UserCourseWishListSerializer(serializers.ModelSerializer):
 
-    # course = CourseSerializer(many=True)
-
     class Meta:
       model = UserCourseWishlist
       fields = ('id', 'course', 'user')
@@ -88,27 +86,22 @@ class UserCourseWishlistReadSerializer(UserCourseWishListSerializer):
 
 class UserCourseFavouritesSerializer(serializers.ModelSerializer):
 
-    # course = CourseSerializer(many=True)
-    # user = UserSerializer()
-
     class Meta:
       model = UserCourseFavourites
       fields = ('id', 'course', 'user')
 
-class UserCourseWishlistReadSerializer(UserCourseFavouritesSerializer):
+class UserCourseFavouritesReadSerializer(UserCourseFavouritesSerializer):
     course = CourseSerializer(many=True)
     user = UserSerializer(read_only=True)
 
 class CourseCommentSerializer(serializers.ModelSerializer):
-
-    # course = CourseSerializer()
 
     class Meta:
       model = CourseComment
       fields = ('id', 'comment', 'created_at', 'course', 'user')
 
 class CourseCommentReadSerializer(CourseCommentSerializer):
-    course = CourseSerializer()
+    course = CourseSerializer(read_only=True)
     user = UserSerializer(read_only=True)
 
 class PopulatedUserSerializer(serializers.ModelSerializer):
@@ -137,8 +130,9 @@ class PopulatedUserSerializer(serializers.ModelSerializer):
     usercourseplayed = UserCoursePlayedReadSerializer(many=True)
     usercoursewishlist = UserCourseWishlistReadSerializer(many=True)
     usercoursefavourites = UserCourseWishlistReadSerializer(many=True)
-    usercoursecomments = CourseCommentReadSerializer(many=True)
+    # usercoursecomments = CourseCommentReadSerializer(many=True)
+    # userhomecourse = UserHomeCourseReadSerializer()
       
     class Meta:
       model = User
-      fields = ('id','username', 'email', 'password', 'password_confirmation', 'first_name', 'last_name', 'user_bio', 'handicap', 'profileimage', 'video_of_swing', 'usergolfbag', 'usergolfphotos', 'usercourseplayed', 'usercoursewishlist', 'usercoursefavourites', 'usercoursecomments')
+      fields = ('id','username', 'email', 'password', 'password_confirmation', 'first_name', 'last_name', 'user_bio', 'handicap', 'profileimage', 'video_of_swing', 'usergolfbag', 'usergolfphotos', 'usercourseplayed', 'usercoursewishlist', 'usercoursefavourites', 'usercoursecomments', 'userhomecourse')

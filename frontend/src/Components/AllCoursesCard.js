@@ -12,7 +12,10 @@ const AllCoursesCard = ({ course }) => {
       </div>
       <div className="CourseCardInfoContainer">
         <h1 className="CourseCardInfoTitle"><span className="CourseCardInfoRanking">{course.ranking}</span>.{course.name}</h1>
-        <h2>{course.country}</h2>
+        <div className="CourseNationandType">
+          <h2>{course.country}</h2>
+          <h2>{course.course_type}</h2>
+        </div>
       </div>
       <div className="CourseCardButtonContainer">
         <Link to={`../course/${course.id}`}>

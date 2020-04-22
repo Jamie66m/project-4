@@ -113,6 +113,11 @@
         display: flex;
         flex-direction: column;
         align-items: flex-start;
+
+        .HomeMediaGalleryTitle {
+          font-weight: bold;
+          text-decoration: underline;
+        }
       }
       .showAllTheCourses {
         height: 100%;
@@ -165,6 +170,13 @@
             .CourseCardInfoRanking {
               font-size: 25px;
             }
+
+            .CourseNationandType {
+              width: 100%;
+              display: flex;
+              flex-direction: row;
+              justify-content: space-between;
+            }
           }
 
           .CourseCardButtonContainer {
@@ -201,6 +213,53 @@
     border: 2px solid blue;
     display: flex;
     flex-direction: column;
+    background-color: rgb(109, 161, 104);
+
+    .UserCoursePlayedStats {
+      width: 100%;
+      height: 50%;
+      display: flex;
+      flex-direction: column;
+      overflow: scroll;
+      border-bottom: 2px solid black;
+
+      .UserCoursePlayedTitle {
+        font-size: 20px;
+        font-weight: bold;
+        text-decoration: underline;
+      }
+
+      .UserCoursePlayedInfo {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        margin: 10px 0px 10px 10px;
+        border-bottom: 1px solid rgb(179, 240, 179);
+      }
+    }
+
+    .UserCourseWishListStats {
+      width: 100%;
+      height: 50%;
+      display: flex;
+      flex-direction: column;
+      overflow: scroll;
+      border-bottom: 2px solid black;
+
+      .UserWishListTitle {
+        font-size: 20px;
+        font-weight: bold;
+        text-decoration: underline;
+      }
+
+      .UserWishListInfo {
+        display: flex;
+        flex-direction: row;
+        flex-wrap: wrap;
+        margin: 10px 0px 10px 10px;
+        border-bottom: 1px solid rgb(179, 240, 179);
+      }
+    }
   }
 
 }
@@ -375,23 +434,23 @@
 
   .AddCoursePlayedFormContainer {
     width: 93%;
-    height: 15%;
-    // border: 2px solid blue;
+    height: 5%;
+    border: 2px solid blue;
     // display: none;
     margin: 0 auto;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
     display: none;
+    margin-top: 20px;
 
     .AddCoursePlayedForm {
-      width: 34%;
+      width: 60%;
       height: 100%;
-      // border: 2px solid red;
+      border: 2px solid red;
       background-color: yellowgreen;
       margin-left: 350px;
       display: none;
-   
 
         .form {
           width: 100%;
@@ -404,6 +463,7 @@
       .addcoursebutton {
         background-color: rgb(96, 138, 93);
         color: white;
+        margin-top: 32px;
       }
     }
   }
@@ -1122,3 +1182,219 @@
   }
 }
 
+
+// Hole Detailed Page
+
+.mainSingleHole {
+  height: 150vh;
+  width: 100vw;
+  border: 2px solid red;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  .singleHoleContainer {
+    height: 14%;
+    width: 93%;
+    border: 2px solid gold;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 0 auto;
+
+  .NameandRankingTitle {
+    font-size: 30px;
+    font-weight: bold;
+    }
+
+    .RankingTitle {
+    padding-left: 5px;
+    }
+  }
+
+  .singleHolePageImageandUsefulInfo {
+    height: 20%;
+    width: 93%;
+    display: flex;
+    flex-direction: row;
+    // border: 2px solid blue;
+    align-items: flex-start;
+    margin: 0 auto;
+
+    .singleHoleFigureImage {
+      height: 100%;
+      width: 35%;
+      // border: 2px solid green;
+
+      .singleHoleImage {
+        width: 100%;
+        height: 100%;
+      }
+    }
+    .UserAddsCourseandInfoContainer {
+      width: 100%;
+      height: 100%;
+      border: 2px solid red;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      .mainCourseAllHolesUsefulInfo {
+        width: 100%;
+        height: 65%;
+        // border: 2px solid blue;
+        display: flex;
+        flex-direction: column;
+        padding-left: 30px;
+        align-items: flex-start;
+        justify-content: flex-start;
+  
+        .UsefulInfoTitle {
+          font-weight: bold;
+        }
+      }
+    }
+  }
+
+  .singleHoleDetailContainer {
+    width: 93%;
+    height: 85%;
+    border: 2px solid black;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    .singleHoleDetailHeader {
+      width: 100%;
+      height: 7%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-around;
+      border: 2px solid red;
+      background-color: rgb(223, 224, 220);
+
+      .HoleNumberContainer {
+        width: 30%;
+        height: 100%;
+        border: 2px solid red;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+
+      .HoleNumber {
+        font-size: 30px;
+        font-weight: bold;
+        margin-left: 20px;
+        color: rgb(76, 189, 53);
+      }
+    }
+      .HolePar {
+        font-weight: bold;
+        margin-right: 10px;
+      }
+    }
+
+    .GraphandVideoContainer {
+      width: 100%;
+      height: 80%;
+      border: 2px solid green;
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
+      .GraphContainer {
+        width: 45%;
+        height: 100%;
+        border: 2px solid blue;
+        background-color: rgb(240, 241, 237);
+
+        .GraphFigure {
+          width: 100%;
+          height: 100%;
+          .GraphImg {
+            width: 550px;
+            height: 600px;
+          }
+        }
+      }
+
+      .VideoContainerandTeeBoxes {
+        width: 50%;
+        height: 100%;
+        border: 2px solid blue;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+        .HoleVideo {
+          width: 100%;
+          height: 60%;
+          border: 2px solid gold;
+
+          .HoleVideoIframe {
+            width: 100%;
+            height: 100%;
+          }
+        }
+
+        .TeeBoxes {
+          width: 100%;
+          height: 27%;
+          border: 2px solid gold;
+
+          .HoleTeeBoxesDropDown {
+            // margin-top: 30px;
+            // margin-left: 50px;
+
+          }
+
+          .HoleTeeBoxContent {
+            width: 100%;
+            height: 100%;
+            border: 2px solid red;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            background-color: rgb(218, 236, 218);
+
+            .HoleTeeBoxOne{
+              width: 100%;
+              height: 33%;
+              // border: 2px solid orange;
+              display: flex;
+              flex-direction: row;
+              align-items: flex-end;
+              justify-content: space-between;
+              border-bottom: 2px solid grey;
+            }
+
+            .HoleTeeBoxTwo{
+              width: 100%;
+              height: 33%;
+              // border: 2px solid orange;
+              display: flex;
+              flex-direction: row;
+              align-items: flex-end;
+              justify-content: space-between;
+              border-bottom: 2px solid grey;
+            }
+
+            .HoleTeeBoxThree{
+              width: 100%;
+              height: 33%;
+              // border: 2px solid orange;
+              display: flex;
+              flex-direction: row;
+              align-items: flex-end;
+              justify-content: space-between;
+              border-bottom: 2px solid grey;
+            }
+          }
+        }
+      }
+    }
+  }
+}

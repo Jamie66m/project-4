@@ -15,7 +15,7 @@ urlpatterns = [
     path('profile/coursesplayed/<int:pk7>', UserCoursePlayedDetailView.as_view()),
     path('profile/courseswishlist', UserCourseWishListListView.as_view()),
     path('profile/courseswishlist/<int:pk8>', UserCourseWishListDetailView.as_view()),
-    path('allcoursefavourites/', AllUsersCourseFavouritesList.as_view()),
+    path('allcoursefavourites', AllUsersCourseFavouritesList.as_view()),
     path('profile/coursesfavourites', UserCourseFavouritesListView.as_view()),
     path('profile/coursesfavourites/<int:pk9>', UserCourseFavouritesDetailView.as_view()),
     path('profile/userhomecourse', UserHomeCourseDetailView.as_view()),

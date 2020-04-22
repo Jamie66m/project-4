@@ -33,7 +33,7 @@ class CourseDetailedPage extends React.Component {
       })
       .catch(err => this.setState({ error: err.response.data.message }))
 
-    axios.get('/api/profile', { headers: { Authorization: `Bearer ${auth.getToken()}` } })
+    axios.get('/api/profile/', { headers: { Authorization: `Bearer ${auth.getToken()}` } })
       .then(res => {
         console.log(res.data)
         this.setState({ user: res.data })
@@ -49,15 +49,35 @@ class CourseDetailedPage extends React.Component {
 
   handleSubmit(event) {
     event.preventDefault()
+    const course = this.state.course
+    document.querySelector('.AddCoursePlayedFormContainer').style.display = 'none'
+    document.querySelector('.AddCoursePlayedForm').style.display = 'none'
     axios.post('/api/profile/coursesplayed', this.state.data, { headers: { Authorization: `Bearer ${auth.getToken()}` } })
-      .then(res => console.log(res.data))
+      .then(alert(`Congrats on playing ${course.name}`))
       .catch(err => this.setState({ errors: err.response.data.errors }))
   }
 
   addWishlist(event) {
     event.preventDefault()
+    const course = this.state.course
     axios.post('/api/profile/courseswishlist', { course: [this.state.course.id] }, { headers: { Authorization: `Bearer ${auth.getToken()}` } })
-      .then(res => console.log(res.data))
+      .then(alert(`You have added the ${course.name} to your wishlist`))
+      .catch(err => this.setState({ errors: err.response.data.errors }))
+  }
+
+  addFavourites(event) {
+    event.preventDefault()
+    const course = this.state.course
+    axios.post('/api/profile/coursesfavourites', { course: [this.state.course.id] }, { headers: { Authorization: `Bearer ${auth.getToken()}` } })
+      .then(alert(`You have added the ${course.name} to your favourites`))
+      .catch(err => this.setState({ errors: err.response.data.errors }))
+  }
+
+  addHomeCourse(event) {
+    event.preventDefault()
+    const course = this.state.course
+    axios.post('/api/profile/userhomecourse', { course: this.state.course.id }, { headers: { Authorization: `Bearer ${auth.getToken()}` } })
+      .then(alert(`You have added the ${course.name} as your home course`))
       .catch(err => this.setState({ errors: err.response.data.errors }))
   }
 
@@ -103,8 +123,8 @@ class CourseDetailedPage extends React.Component {
           <div className="UserAddsCourse">
             <button className="UserAddsCourseButton" onClick={() => this.showAddCoursePlayedForm()}>+Add to courses played</button>
             <button className="UserAddsCourseButton" onClick={() => this.addWishlist(event)}>+Add to course wishlist</button>
-            <button className="UserAddsCourseButton">+Add to course favourites</button>
-            <button className="UserAddsCourseButton">Make Home Course</button>
+            <button className="UserAddsCourseButton" onClick={() => this.addFavourites(event)}>+Add to course favourites</button>
+            <button className="UserAddsCourseButton" onClick={() => this.addHomeCourse(event)}>Make Home Course</button>
           </div>
         </div>
       </div>
