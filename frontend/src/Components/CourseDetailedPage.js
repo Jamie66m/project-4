@@ -3,8 +3,8 @@ import axios from 'axios'
 import auth from '../lib/auth'
 import { Link } from 'react-router-dom'
 import Slider from 'react-slick'
-import CourseComments from './CourseComments'
 import AddCoursePlayedForm from './AddCoursePlayedForm'
+import Moment from 'react-moment'
 
 class CourseDetailedPage extends React.Component {
 
@@ -18,6 +18,10 @@ class CourseDetailedPage extends React.Component {
         score: Number,
         time: '',
         course: []
+      },
+      comment: {
+        comment: '',
+        course: null
       },
       errors: {}
     }
@@ -53,7 +57,7 @@ class CourseDetailedPage extends React.Component {
     document.querySelector('.AddCoursePlayedFormContainer').style.display = 'none'
     document.querySelector('.AddCoursePlayedForm').style.display = 'none'
     axios.post('/api/profile/coursesplayed', this.state.data, { headers: { Authorization: `Bearer ${auth.getToken()}` } })
-      .then(alert(`Congrats on playing ${course.name}`))
+      .then(alert(`Congrats on having played ${course.name} already`))
       .catch(err => this.setState({ errors: err.response.data.errors }))
   }
 
@@ -86,6 +90,25 @@ class CourseDetailedPage extends React.Component {
     document.querySelector('.AddCoursePlayedForm').style.display = 'block'
   }
 
+  handleCommentSubmit(event) {
+    event.preventDefault()
+    const courseId = this.state.course.id
+    axios.post(`/api/courses/${courseId}/coursecomments`, this.state.comment, { headers: { Authorization: `Bearer ${auth.getToken()}` } })
+      .then(res => {
+        console.log(res.data)
+        console.log(this.state.course)
+      })
+      .catch(err => this.setState({ error: err.response.data.message }))
+    location.reload()
+  }
+
+
+  handleCommentChange(event) {
+    const { name, value } = event.target
+    const comment = { ...this.state.comment, [name]: value, course: this.state.course.id }
+    this.setState({ comment })
+  }
+
   render() {
     if (!this.state.course) return <h1>WAITING FOR COURSE</h1>
 
@@ -106,7 +129,7 @@ class CourseDetailedPage extends React.Component {
 
     return <main className="mainCourseDetailedPage">
       <div className="mainCourseDetailedPageTitleandRating">
-        <h1 className="NameandRankingTitle">{course.name}/<span className="RankingTitle">{course.ranking}</span></h1>
+        <h1 className="NameandRankingTitle">{course.name}</h1>
       </div>
       <div className="mainCourseDetailedPageImageandUsefulInfo">
         <figure className="mainCourseDetailedPageFigureImage">
@@ -236,7 +259,36 @@ class CourseDetailedPage extends React.Component {
         </div>
         <div className="CommentsandPlayerReviewsContainer">
           <div className="Comments">
-            <CourseComments course={this.state.course} user={this.state.user} />
+            <div className="allCourseCommentsContainer">
+              <h1 className="CourseCommentTitle">Add a comment for {course.name}</h1>
+              <div className="allTheComments">
+                {this.state.course.coursecomments && this.state.course.coursecomments.map((comment, index) => {
+                  const dateToFormat = `${comment.created_at}`
+                  return <article className="CommentContainer" key={index}>
+                    <div key={index} className="AComment">
+                      <div className="CommentsContent">
+                        <p className="TheComment">{comment.comment}</p>
+                      </div>
+                      <div className="timeStamp">
+                        <p className="timeStampInfo"><Moment fromNow>{dateToFormat}</Moment></p>
+                      </div>
+                    </div>
+                  </article>
+                })}
+              </div>
+            </div>
+
+            <div className="addCourseComment">
+              <form onSubmit={() => this.handleCommentSubmit(event)} >
+                <textarea
+                  className="textarea"
+                  placeholder="Add comment...(max 200 characters)"
+                  onChange={(event) => this.handleCommentChange(event)} type='text' name='comment' comment={this.state.comment}>
+                </textarea>
+                <button className="button is-success" id="commentSubmitButton">Submit</button>
+              </form>
+            </div>
+
           </div>
           <div className="PlayerReviews">
             <div>

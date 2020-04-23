@@ -56,10 +56,6 @@ class UserHomeCourseSerializer(serializers.ModelSerializer):
       model = UserHomeCourse
       fields = ('id', 'course', 'user')
 
-class UserHomeCourseReadSerializer(UserHomeCourseSerializer):
-    course = CourseSerializer()
-    user = UserSerializer(read_only=True)
-
 class UserCoursePlayedSerializer(serializers.ModelSerializer):
 
     # course = CourseSerializer(read_only=True)
@@ -79,7 +75,7 @@ class UserCourseWishListSerializer(serializers.ModelSerializer):
     class Meta:
       model = UserCourseWishlist
       fields = ('id', 'course', 'user')
-
+      
 class UserCourseWishlistReadSerializer(UserCourseWishListSerializer):
     course = CourseSerializer(many=True)
     user = UserSerializer(read_only=True)
@@ -100,9 +96,11 @@ class CourseCommentSerializer(serializers.ModelSerializer):
       model = CourseComment
       fields = ('id', 'comment', 'created_at', 'course', 'user')
 
-class CourseCommentReadSerializer(CourseCommentSerializer):
-    course = CourseSerializer(read_only=True)
-    user = UserSerializer(read_only=True)
+# class UserAbstractSerializer(serializers.ModelSerializer): 
+
+#     class Meta:
+#       model = User
+#       fields = ('first_name', 'last_name', 'handicap', 'user_bio', 'profileimage', 'video_of_swing')
 
 class PopulatedUserSerializer(serializers.ModelSerializer):
 
@@ -130,9 +128,9 @@ class PopulatedUserSerializer(serializers.ModelSerializer):
     usercourseplayed = UserCoursePlayedReadSerializer(many=True)
     usercoursewishlist = UserCourseWishlistReadSerializer(many=True)
     usercoursefavourites = UserCourseWishlistReadSerializer(many=True)
-    # usercoursecomments = CourseCommentReadSerializer(many=True)
-    # userhomecourse = UserHomeCourseReadSerializer()
+    usercoursecomments = CourseCommentSerializer(many=True)
+    userhomecourse = UserHomeCourseSerializer(many=True)
       
     class Meta:
       model = User
-      fields = ('id','username', 'email', 'password', 'password_confirmation', 'first_name', 'last_name', 'user_bio', 'handicap', 'profileimage', 'video_of_swing', 'usergolfbag', 'usergolfphotos', 'usercourseplayed', 'usercoursewishlist', 'usercoursefavourites', 'usercoursecomments', 'userhomecourse')
+      fields = ('id','username', 'email', 'password', 'password_confirmation', 'usergolfbag', 'usergolfphotos', 'usercourseplayed', 'usercoursewishlist', 'usercoursefavourites', 'usercoursecomments', 'userhomecourse')

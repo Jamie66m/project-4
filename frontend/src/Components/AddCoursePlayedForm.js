@@ -2,7 +2,6 @@ import React from 'react'
 
 const AddCoursePlayedForm = ({ handleSubmit, handleChange, errors, courseId, data }) => {
   console.log(data)
-  const coursechosen = courseId
   const { rating, score, time } = data
   return <div className='FormContainer'>
 

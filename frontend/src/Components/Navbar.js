@@ -19,7 +19,7 @@ class Navbar extends React.Component {
     const isLoggedIn = auth.isLoggedIn()
     return <nav className="navbar" role="navigation" aria-label="main navigation">
       <div className="navbar-brand">
-        <h1 className="navbar-item">Birdie Time</h1>
+        <h1 className="navbar-item" id="BirdieTimeTitle">Birdie Time</h1>
 
         <a role="button"
           className={`navbar-burger burger ${this.state.navMobileOpen ? 'is-active' : ''}`}
@@ -37,6 +37,12 @@ class Navbar extends React.Component {
 
       <div className={`navbar-menu ${this.state.navMobileOpen ? 'is-active' : ''}`}>
         <div className="navbar-start">
+          {isLoggedIn && <a className="navbar-item">
+            <Link to="/birdie_time_user_home">Home</Link>
+          </a>}
+          {!isLoggedIn && <a className="navbar-item">
+            <Link to="/">Home</Link>
+          </a>}
           <a className="navbar-item">
             <Link to="/map">Map of Courses</Link>
           </a>

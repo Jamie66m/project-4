@@ -4,16 +4,16 @@
 }
 
 .mainNonUserHome {
-  height: 400vh;
+  height: 200vh;
   width: 100%;
   display: flex;
   flex-direction: column;
-  border: 2px solid red;
+  // border: 2px solid red;
 
   .mainNonUserHomeImageContainer {
-    height: 18%;
+    height: 38%;
     width: 100%;
-    border: 2px solid green;
+    // border: 2px solid green;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -38,14 +38,82 @@
       text-transform: uppercase;
     }
   }
+
+  .AboutContainer {
+    width: 100%;
+    height: 20%;
+    background-color: rgb(241, 235, 235);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .AboutBirdieTimeTitle {
+      font-size: 50px;
+      color: rgb(100, 197, 105);
+    }
+
+    .AboutParagraph {
+      width: 60%;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .SiteUpdates {
+      color: rgb(185, 32, 32);
+      width: 60%;
+      margin-top: 20px;
+      text-align: center;
+    }
+  }
+
+  .ImagesContainer {
+    width: 100%;
+    height: 30%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    // border: 2px solid blue;
+
+    .ImageContainer {
+      width: 30%;
+      height: 80%;
+      display: flex;
+      flex-direction: column;
+      // border: 2px solid blue;
+      align-items: center;
+      justify-content: space-evenly;
+
+      .ImageSize {
+        width: 400px;
+        height: 250px;
+      }
+
+      .CourseMiniDescription {
+        width: 90%;
+        margin: 0 auto;
+        text-align: center;
+      }
+    }
+  }
+  .NonUserFooter {
+    width: 100%;
+    height: 15%;
+    background-color: rgb(241, 235, 235);
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
 }
 
 
 // User Home
 .mainUserHome {
-  height: 200vh;
+  height: 100vh;
   width: 100vw;
-  border: 2px solid red;
+  // border: 2px solid red;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -53,14 +121,14 @@
   .mainUserHomeCoursesContainer {
     height: 100%;
     width: 73%;
-    border: 2px solid blue;
+    // border: 2px solid blue;
     display: flex;
     flex-direction: column;
 
     .mainUserHomeCoursesHeader {
-      height: 10%;
+      height: 20%;
       width: 100%;
-      border: 2px solid green;
+      // border: 2px solid green;
       display: flex;
       flex-direction: row;
       align-items: center;
@@ -78,7 +146,7 @@
       .mainUserHomeCoursesHeaderSearchBar {
         height: 100%;
         width: 50%;
-        border: 2px solid pink;
+        // border: 2px solid pink;
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -87,7 +155,7 @@
         .BirdieUserHomeSearchForm {
           height: 100%;
           width: 100%;
-          border: 2px solid gold;
+          // border: 2px solid gold;
           display: flex;
           flex-direction: row;
           align-items: center;
@@ -104,14 +172,18 @@
       width: 100%;
       display: flex;
       flex-direction: row;
+      // border: 2px solid orange;
+      padding-top: 20px;
       justify-content: space-between;
 
       .coursesMediaGallery {
         height: 100%;
         width: 20;
-        border: 2px solid black;
+        border-right: 2px solid black;
+        padding-right: 10px;
         display: flex;
         flex-direction: column;
+        overflow: scroll;
         align-items: flex-start;
 
         .HomeMediaGalleryTitle {
@@ -119,30 +191,40 @@
           text-decoration: underline;
         }
       }
-      .showAllTheCourses {
+
+    .showAllTheCoursesContainer {
         height: 100%;
         width: 68%;
-        border: 2px solid black;
+        // border: 2px solid black;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+
+      .showAllTheCourses {
+        height: 90%;
+        width: 100%;
+        // border: 2px solid red;
         display: flex;
         flex-direction: row;
+        justify-content: space-between;
         flex-wrap: wrap;
 
         .CourseCardContainer {
           width: 45%;
-          height: 22%;
+          height: 48%;
           border-top: 3px solid rgb(155, 103, 36);
           background-color: rgb(249, 250, 250);
           padding: 0px;
-          margin: 0px 20px 10px 13px;
+          margin: 0px 20px 10px 0px;
           display: flex;
           flex-direction: column;
-          align-items: flex-start;
+          // align-items: flex-start;
           box-shadow: 0px 3px 15px rgba(0,0,0,0.3);
 
           .CourseCardImageContainer {
             width: 100%;
             height: 50%;
-            border: 2px solid orange;
+            // border: 2px solid orange;
 
             .CourseHeroImageContainer {
               width: 100%;
@@ -157,7 +239,7 @@
           .CourseCardInfoContainer {
             width: 100%;
             height: 30%;
-            border: 2px solid blue;
+            // border: 2px solid blue;
             padding-left: 5px;
             display: flex;
             flex-direction: column;
@@ -165,7 +247,7 @@
 
             .CourseCardInfoTitle {
               font-weight: bold;
-              font-size: 15px;
+              font-size: 20px;
             }
             .CourseCardInfoRanking {
               font-size: 25px;
@@ -182,7 +264,7 @@
           .CourseCardButtonContainer {
             width: 100%;
             height: 20%;
-            border: 2px solid green;
+            // border: 2px solid green;
             display: flex;
             flex-direction: row;
             justify-content: center;
@@ -206,14 +288,25 @@
       }
     }
   }
-
+  .PaginationContainer {
+    width: 100%;
+    height: 10%;
+    // border: 2px solid brown;
+    .pagination {
+      // border: 2px solid blue;
+      height: 100%;
+     }
+    }
+  }
   .UserStatsContainer {
     height: 100%;
     width: 25%;
-    border: 2px solid blue;
+    border-left: 2px solid black;
+    padding-top: 20px;
+    padding-left: 5px;
     display: flex;
     flex-direction: column;
-    background-color: rgb(109, 161, 104);
+    background-color: rgb(187, 243, 183);
 
     .UserCoursePlayedStats {
       width: 100%;
@@ -234,7 +327,7 @@
         flex-direction: row;
         flex-wrap: wrap;
         margin: 10px 0px 10px 10px;
-        border-bottom: 1px solid rgb(179, 240, 179);
+        border-bottom: 1px solid rgb(147, 158, 147);
       }
     }
 
@@ -257,7 +350,7 @@
         flex-direction: row;
         flex-wrap: wrap;
         margin: 10px 0px 10px 10px;
-        border-bottom: 1px solid rgb(179, 240, 179);
+        border-bottom: 1px solid rgb(147, 158, 147);
       }
     }
   }
@@ -272,6 +365,11 @@
   height: 100px;
   border-top: 3px solid rgb(126, 80, 20);
   box-shadow: 0 5px 5px rgba(182, 182, 182, 0.75);
+
+  #BirdieTimeTitle {
+    font-size: 30px;
+    font-weight: bold;
+  }
 }
 
 // Login
@@ -376,7 +474,8 @@
     width: 93%;
     display: flex;
     flex-direction: row;
-    border: 2px solid blue;
+    border-top: 1px solid rgb(223, 213, 213);
+    border-bottom: 1px solid rgb(223, 213, 213);
     align-items: flex-start;
     margin: 0 auto;
 
@@ -414,7 +513,7 @@
       .UserAddsCourse {
         width: 100%;
         height: 35%;
-        border: 2px solid black;
+        // border: 2px solid black;
         padding-left: 30px;
         display: flex;
         flex-direction: row;
@@ -435,7 +534,7 @@
   .AddCoursePlayedFormContainer {
     width: 93%;
     height: 5%;
-    border: 2px solid blue;
+    // border: 2px solid blue;
     // display: none;
     margin: 0 auto;
     display: flex;
@@ -447,7 +546,7 @@
     .AddCoursePlayedForm {
       width: 60%;
       height: 100%;
-      border: 2px solid red;
+      // border: 2px solid red;
       background-color: yellowgreen;
       margin-left: 350px;
       display: none;
@@ -550,7 +649,7 @@
         .StatTitle {
           width: 50%;
           height: 100%;
-          // border: 2px solid orange;
+          border-bottom: 1px solid rgb(88, 153, 88);
           display: flex;
           flex-direction: row;
           justify-content: flex-start;
@@ -561,6 +660,15 @@
             font-weight: bold;
           }
         }
+        .StatAnswer {
+          width: 50%;
+          height: 100%;
+          border-bottom: 1px solid rgb(88, 153, 88);
+          display: flex;
+          flex-direction: row;
+          justify-content: flex-start;
+          align-items: flex-end;
+          padding-left: 5px;        }
       }
     }
 
@@ -575,11 +683,12 @@
         width: 95%;
         height: 100%;
         margin: 0 auto;
-        border: 2px solid black;
+        border-left: 1px solid rgb(88, 153, 88);
         display: flex;
         flex-direction: row;
         justify-content: center;
         align-items: center;
+        text-align: center;
 
         .TheCourseDescriptionDetail {
           font-style: italic;
@@ -618,7 +727,8 @@
     .CourseDetailedPageMediaGallery {
       width: 30%;
       height: 100%;
-      // border: 2px solid red;
+      border-right: 2px solid black;
+      padding-right: 10px;
       display: flex;
       flex-direction: column;
 
@@ -662,14 +772,14 @@
     .CommentsandPlayerReviewsContainer {
       width: 68%;
       height: 100%;
-      border: 2px solid red;
+      // border: 2px solid red;
       display: flex;
       flex-direction: column;
       
       .Comments {
         width: 100%;
         height: 60%;
-        border: 2px solid brown;
+        // border: 2px solid brown;
         display: flex;
         flex-direction: row;
 
@@ -690,6 +800,41 @@
             width: 85%;
             height: 90%;
             background-color: rgb(110, 201, 110);
+            overflow: scroll;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+
+            .CommentContainer {
+              height: 30%;
+              width: 95%;
+              margin: 5px auto 0px;
+              display: flex;
+              flex-direction: row;
+              background-color: rgb(252, 249, 249);
+              box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
+              border-radius: 5px;
+              // border: 2px solid blue;
+          
+              .AComment {
+                width: 87%;
+                height: 100%;
+                // border: 2px solid orange;
+                margin: 0 auto;
+                display: flex;
+                flex-direction: column;
+                justify-content: flex-start;
+
+                .CommentsContent {
+                  width: 100%;
+                  height: 80%;
+                  border-bottom: 2px solid rgba(235, 234, 234, 0.712);
+                  overflow: scroll;
+                  background-color: rgb(253, 253, 253);
+                  box-shadow: 0px 3px 15px rgba(0,0,0,0.2);
+                }
+              }
+            }
           }
         }
 
@@ -701,7 +846,7 @@
           .textarea {
             width: 50px;
             height: 100px;
-            margin: 46px auto;
+            margin-bottom: 5px
           }
         }
       }
@@ -709,9 +854,10 @@
       .PlayerReviews {
         width: 100%;
         height: 40%;
-        border: 2px solid brown;
+        border-top: 1px solid rgb(88, 153, 88);
         display: flex;
         flex-direction: column;
+        margin-top: 5px;
 
         .PlayerReviewsTitle {
           font-weight: bold;
@@ -728,7 +874,7 @@
         .PlayerReview1 {
           width: 50%;
           height: 100%;
-          border: 2px solid gold;
+          // border: 2px solid gold;
           display: flex;
           flex-direction: row;
           justify-content: flex-start;
@@ -753,7 +899,7 @@
             display: flex;
             flex-direction: row;
             align-items: center;
-            border: 2px solid black;
+            // border: 2px solid black;
           }
         }
 
@@ -798,7 +944,7 @@
 .MainCourseAllHolesContainer {
   height: 190vh;
   width: 100vw;
-  border: 2px solid red;
+  // border: 2px solid red;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -806,7 +952,7 @@
   .MainCourseAllHolesContainer{    
   height: 8%;
   width: 93%;
-  border: 2px solid gold;
+  // border: 2px solid gold;
   display: flex;
   flex-direction: row;
   align-items: center;
@@ -844,7 +990,7 @@
     .UserAddsCourseandInfoContainer {
       width: 100%;
       height: 100%;
-      border: 2px solid red;
+      border-bottom: 1px solid rgb(74, 158, 74);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -923,7 +1069,7 @@
   .CourseAllHolesContainer {
     width: 93%;
     height: 75%;
-    border: 2px solid black;
+    // border: 2px solid black;
     margin: 10px auto 0;
     display: flex;
     flex-direction: column;
@@ -937,14 +1083,14 @@
     .CourseAllHolesOutContainer {
       width: 100%;
       height: 50%;
-      border: 2px solid blue;
+      // border: 2px solid blue;
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
 
       .CourseOutHoles {
         width: 20%;
-        border: 2px solid red;
+        // border: 2px solid red;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
@@ -952,7 +1098,7 @@
         .CourseOutHolesInfo {
           width: 100%;
           height: 20%;
-          border: 2px solid green;
+          // border: 2px solid green;
           display: flex;
           flex-direction: row;
           justify-content: flex-start;
@@ -999,7 +1145,7 @@
 
       .CourseOutHolesWithTheGraph {
         width: 20%;
-        border: 2px solid red;
+        // border: 2px solid red;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
@@ -1007,7 +1153,7 @@
         .CourseOutHolesInfo {
           width: 100%;
           height: 20%;
-          border: 2px solid green;
+          // border: 2px solid green;
           display: flex;
           flex-direction: row;
           justify-content: flex-start;
@@ -1033,7 +1179,7 @@
         .CourseOutHolesWithGraph {
           width: 100%;
           height: 80%;
-          border: 2px solid yellow;
+          border-right: 1px solid rgb(64, 158, 64);
           background-color: rgb(206, 206, 206);
          
 
@@ -1064,14 +1210,14 @@
     .CourseAllHolesInContainer {
       width: 100%;
       height: 50%;
-      border: 2px solid blue;
+      // border: 2px solid blue;
       display: flex;
       flex-direction: row;
       flex-wrap: wrap;
 
       .CourseInHoles {
         width: 20%;
-        border: 2px solid red;
+        // border: 2px solid red;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
@@ -1126,7 +1272,7 @@
 
       .CourseInHolesWithTheGraph {
         width: 20%;
-        border: 2px solid red;
+        // border: 2px solid red;
         display: flex;
         flex-direction: column;
         justify-content: flex-start;
@@ -1134,7 +1280,7 @@
         .CourseInHolesInfo {
           width: 100%;
           height: 20%;
-          border: 2px solid green;
+          // border: 2px solid green;
           display: flex;
           flex-direction: row;
           justify-content: flex-start;
@@ -1160,7 +1306,7 @@
         .CourseInHolesWithGraph {
           width: 100%;
           height: 80%;
-          border: 2px solid yellow;
+          border-right: 1px solid rgb(64, 158, 64);
           background-color: rgb(206, 206, 206);
           
           .CourseInHolesWithGraphFig {
@@ -1188,7 +1334,7 @@
 .mainSingleHole {
   height: 150vh;
   width: 100vw;
-  border: 2px solid red;
+  // border: 2px solid red;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
@@ -1196,7 +1342,7 @@
   .singleHoleContainer {
     height: 14%;
     width: 93%;
-    border: 2px solid gold;
+    // border: 2px solid gold;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -1234,7 +1380,7 @@
     .UserAddsCourseandInfoContainer {
       width: 100%;
       height: 100%;
-      border: 2px solid red;
+      border-bottom: 1px solid rgb(57, 153, 57);
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -1259,7 +1405,7 @@
   .singleHoleDetailContainer {
     width: 93%;
     height: 85%;
-    border: 2px solid black;
+    // border: 2px solid black;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
@@ -1272,13 +1418,13 @@
       flex-direction: row;
       align-items: center;
       justify-content: space-around;
-      border: 2px solid red;
+      // border: 2px solid red;
       background-color: rgb(223, 224, 220);
 
       .HoleNumberContainer {
         width: 30%;
         height: 100%;
-        border: 2px solid red;
+        // border: 2px solid red;
         display: flex;
         flex-direction: row;
         justify-content: flex-start;
@@ -1300,7 +1446,9 @@
     .GraphandVideoContainer {
       width: 100%;
       height: 80%;
-      border: 2px solid green;
+      border-top: 1px solid rgb(60, 160, 60);
+      border-bottom: 1px solid rgb(60, 160, 60);
+      padding: 20px 0px;
       display: flex;
       flex-direction: row;
       justify-content: space-between;
@@ -1308,7 +1456,7 @@
       .GraphContainer {
         width: 45%;
         height: 100%;
-        border: 2px solid blue;
+        // border: 2px solid blue;
         background-color: rgb(240, 241, 237);
 
         .GraphFigure {
@@ -1324,7 +1472,7 @@
       .VideoContainerandTeeBoxes {
         width: 50%;
         height: 100%;
-        border: 2px solid blue;
+        // border: 2px solid blue;
         display: flex;
         flex-direction: column;
         justify-content: space-between;
@@ -1343,7 +1491,7 @@
         .TeeBoxes {
           width: 100%;
           height: 27%;
-          border: 2px solid gold;
+          // border: 2px solid gold;
 
           .HoleTeeBoxesDropDown {
             // margin-top: 30px;
@@ -1397,4 +1545,295 @@
       }
     }
   }
+}
+
+//User Profile
+
+.mainUserProfile {
+  width: 80vw;
+  height: 200vh;
+  // border: 2px solid red;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: rgb(235, 238, 235);
+
+  .UserProfileHomeCourseImgContainer {
+    width: 80%;
+    height: 35%;
+    // border: 2px solid black;
+    display: flex;
+    flex-direction: column;
+
+    .UserProfileHomeCourseImg {
+      width: 100%;
+      height: 100%;
+      // border: 2px solid green;
+
+      .UserProfileHomeCourseFig {
+        width: 100%;
+        height: 100%;
+        .TheUserProfileHomeCourseFig {
+          width: 100%;
+            height: 100%;
+        }
+      }
+    }
+  }
+
+  .UserProfileInfoContainer {
+    width: 80%;
+    height: 10%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    background-color: rgb(247, 242, 242);
+
+    .UserInfo {
+      width: 30%;
+      height: 90%;
+      background-color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-evenly;
+      box-shadow: 0px 3px 15px rgba(0,0,0,0.3);
+
+      .YourInfoTitle {
+        font-weight: bold;
+        text-decoration: underline;
+      }
+    }
+    .UserProfileButtons {
+      display: flex;
+      flex-direction: row;
+      width: 70%;
+      height: 100%;
+      align-items: center;
+      justify-content: space-evenly;
+      flex-wrap: wrap;
+    }
+  }
+
+
+  .UserCoursesPlayed {
+    width: 80%;
+    height: 30%;
+    border: 2px solid green;
+    // justify-content: ;
+    margin-top: 20px;
+    overflow: scroll;
+    display: none;
+
+    .CoursesPlayedImgandStats {
+      width: 30%;
+      height: 100%;
+      // border: 2px solid red;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+
+    .UserCoursesPlayedImg {
+      width: 400px;
+      height: 200px;
+      padding: 0px 20px;
+
+      }
+    }
+  }
+
+  .UserCourseWishlist {
+    width: 80%;
+    height: 30%;
+    border: 2px solid green;
+    // justify-content: ;
+    margin-top: 20px;
+    overflow: scroll;
+    display: none;
+
+    .UserCourseWishlistImgandStats {
+      width: 30%;
+      height: 100%;
+      // border: 2px solid red;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+
+    .UserCourseWishlistimg {
+      width: 400px;
+      height: 200px;
+      padding: 0px 20px;
+
+      }
+    }
+  }
+
+  .UserCourseFavourites {
+    width: 80%;
+    height: 30%;
+    border: 2px solid green;
+    // justify-content: ;
+    margin-top: 20px;
+    overflow: scroll;
+    display: none;
+
+    .UserCourseFavouritesImgandStats {
+      width: 30%;
+      height: 100%;
+      // border: 2px solid red;
+      display: flex;
+      flex-direction: column;
+      text-align: center;
+
+    .UserCourseFavouritesImg {
+      width: 400px;
+      height: 200px;
+      padding: 0px 20px;
+
+      }
+    }
+  }
+
+.GolfBagContainer {
+  width: 80%;
+  height: 40%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: flex-start;
+  // border: 2px solid blue;
+  margin-top: 50px;
+
+  .GolfBagFormContainer {
+    width: 50%;
+    height: 60%;
+    // border: 2px solid red;
+    // display: flex;
+    // flex-direction: row;
+    // flex-wrap: wrap;
+    // justify-content: space-evenly;
+    margin-top: 30px;
+
+    .CreateYourBagTitle {
+      width: 100%;
+      height: 10%;
+      font-size: 30px;
+      font-weight: bold;
+      color: rgb(63, 163, 63);
+      text-decoration: underline;
+      margin-bottom: 20px;
+    }
+    .golfbagform {
+      width: 100%;
+      height: 80%;
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      animation: fade ease-in 1s forwards;
+      background-color: rgb(202, 238, 202);
+    }
+    
+    @keyframes fade {
+      0% {
+        opacity: 0;
+      }
+      25% {
+        opacity: 0.25;
+      }
+      50% {
+        opacity: 0.5;
+      }
+      75% {
+        opacity: 0.75;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+    
+    @-webkit-keyframes fade {
+      0% {
+        opacity: 0;
+      }
+      25% {
+        opacity: 0.25;
+      }
+      50% {
+        opacity: 0.5;
+      }
+      75% {
+        opacity: 0.75;
+      }
+      100% {
+        opacity: 1;
+      }
+    }
+    }
+  }
+
+  .ShowGolfBag {
+    width: 50%;
+    height: 85%;
+    border-left: 2px solid rgb(66, 146, 66);
+    padding-left: 20px;
+    // display: flex;
+    // flex-direction: row;
+    // flex-wrap: wrap;
+    // justify-content: space-evenly;
+    margin-top: 30px;
+
+    .YourGolfBagTitle {
+      width: 100%;
+      height: 10%;
+      font-size: 30px;
+      font-weight: bold;
+      color: rgb(63, 163, 63);
+      text-decoration: underline;
+    }
+
+    .TheUserBagandImageContainer {
+      width: 100%;
+      height: 90%;
+      // border: 2px solid blue;
+      display: flex;
+      flex-direction: row;
+    .TheUserbag {
+      width: 50%;
+      height: 100%;
+      // border: 2px solid green;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-around;
+    }
+
+    .BagImage {
+      width: 50%;
+      height: 100%;
+      // border: 2px solid green;
+     
+      .TheBagImage {
+        width: 250px;
+        height: 420px;
+      }
+    }
+   }
+  }
+}
+
+// Course Maps
+
+.CourseMaps {
+  height: 93vh;
+  width: 100vw;
+  background-image: url('https://royalcountydown.designmode.intelligentgolf.co.uk/images/resources/royalcountydown/new-home-slide-2-large.jpg');
+  background-position: center;
+  background-repeat:  no-repeat;
+  background-attachment: fixed;
+  background-size:  cover;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }

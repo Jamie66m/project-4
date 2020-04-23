@@ -18,6 +18,9 @@ import CourseHoleDetailedPage from './Components/CourseHoleDetailedPage'
 
 import UserProfile from './Components/UserProfile'
 
+
+import coursePagination from './Components/PaginationExperiment'
+
 const App = () => (
 
   <HashRouter>
@@ -32,6 +35,7 @@ const App = () => (
       <Route exact path="/course/:id/holes" component={CourseAllHoles} />
       <Route path="/course/:id/holes/:id" component={CourseHoleDetailedPage} />
       <Route exact path = "/profile" component={UserProfile} />
+      <Route exact path = "/pagination" component={coursePagination} />
     </Switch>
   </HashRouter>
 

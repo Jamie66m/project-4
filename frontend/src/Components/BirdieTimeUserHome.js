@@ -1,9 +1,8 @@
 import React from 'react'
 import axios from 'axios'
 import auth from '../lib/auth'
-import { Link } from 'react-router-dom'
-import SearchFormBirdieUserHome from './SearchForm'
 import AllCoursesCard from './AllCoursesCard'
+import Pagination from './Pagination'
 
 class BirdieTimeUserHome extends React.Component {
 
@@ -12,6 +11,9 @@ class BirdieTimeUserHome extends React.Component {
     this.state = {
       courses: [],
       filteredCourses: [],
+      loading: false,
+      currentPage: 1,
+      coursesPerPage: 4,
       userscoursesplayed: [],
       userscoursefavourites: [],
       query: ''
@@ -22,7 +24,7 @@ class BirdieTimeUserHome extends React.Component {
     axios.get('/api/golfcourses/courses', { headers: { Authorization: `Bearer ${auth.getToken()}` } })
       .then(res => {
         console.log(res.data)
-        this.setState({ courses: res.data, filteredCourses: res.data })
+        this.setState({ courses: res.data, filteredCourses: res.data, loading: false })
       })
       .catch(err => this.setState({ error: err.response.data.message }))
 
@@ -87,80 +89,23 @@ class BirdieTimeUserHome extends React.Component {
   render() {
     if (!this.state.courses) return <h1>WAITING FOR COURSES</h1>
 
+    const loading = this.state.loading
+
+    const indexOfLastCourse = this.state.currentPage * this.state.coursesPerPage
+    const indexOfFirstCourse = indexOfLastCourse - this.state.coursesPerPage
+    const currentCourse = this.state.filteredCourses.slice(indexOfFirstCourse, indexOfLastCourse)
+
+
+    const courses = currentCourse
+    // const setCurrentPage = this.state.currentPage
+
+    const paginate = (pageNumber) => this.setState({ currentPage: pageNumber })
+
+    if (loading) {
+      return <h2>Loading...</h2>
+    }
     return <main className="mainUserHome">
       <section className="mainUserHomeCoursesContainer">
-        <div className="mainUserHomeCoursesHeader">
-          <div className="DropDownsContainer">
-            <div className="mainUserHomeCoursesDropDown1">
-              <div className="dropdown is-hoverable">
-                <div className="dropdown-trigger">
-                  <button className="button" aria-haspopup="true" aria-controls="dropdown-menu">
-                    <span>Filter By Nation</span>
-                    <span className="icon is-small">
-                      <i className="fas fa-angle-down" aria-hidden="true"></i>
-                    </span>
-                  </button>
-                </div>
-                <div className="dropdown-menu" id="dropdown-menu" role="menu">
-                  <div className="dropdown-content" onClick={() => this.CountryFilter(event)} >
-                    <a className="dropdown-item">
-                      All
-                    </a>
-                    <a value='Northern Ireland' className="dropdown-item">
-                      Northern Ireland
-                    </a>
-                    <a className="dropdown-item">
-                      Scotland
-                    </a>
-                    <a className="dropdown-item">
-                      England
-                    </a>
-                    <a className="dropdown-item">
-                      Wales
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="mainUserHomeCoursesDropDown2">
-              <div className="dropdown is-hoverable">
-                <div className="dropdown-trigger">
-                  <button className="button" aria-haspopup="true" aria-controls="dropdown-menu">
-                    <span>Filter By Course Type</span>
-                    <span className="icon is-small">
-                      <i className="fas fa-angle-down" aria-hidden="true"></i>
-                    </span>
-                  </button>
-                </div>
-                <div className="dropdown-menu" id="dropdown-menu" role="menu">
-                  <div className="dropdown-content" onClick={() => this.CourseTypeFilter(event)}>
-                    <a className="dropdown-item">
-                      All
-                    </a>
-                    <a className="dropdown-item">
-                      Links
-                    </a>
-                    <a className="dropdown-item">
-                      Parkland
-                    </a>
-                    <a className="dropdown-item">
-                      Downland
-                    </a>
-                    <a className="dropdown-item">
-                      Heathland
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="mainUserHomeCoursesHeaderSearchBar">
-            <SearchFormBirdieUserHome
-              query={this.state.query}
-              onChange={() => this.handleSearch(event)}
-            />
-          </div>
-        </div>
         <div className="MediaGalleryandCoursesContainer">
           <section className="coursesMediaGallery">
             <h1 className="HomeMediaGalleryTitle">MEDIA GALLERY</h1>
@@ -170,22 +115,31 @@ class BirdieTimeUserHome extends React.Component {
               </div>
             })}
           </section>
-          <section className="showAllTheCourses">
-            {this.state.filteredCourses.reverse().map((course, index) => {
+          <section className="showAllTheCoursesContainer">
+            <div className="showAllTheCourses">
+              {courses.map((course, index) => {
 
-              return <AllCoursesCard key={index} course={course} />
-              // return <div className="course" key={index}>
-              //   <Link to={`../course/${course.id}`}><h1>{course.name}</h1></Link>
-              //   <img src={course.hero_image} alt="" />
-              // </div>
-            })}
+                return <AllCoursesCard key={index} course={course} />
+                // return <div className="course" key={index}>
+                //   <Link to={`../course/${course.id}`}><h1>{course.name}</h1></Link>
+                //   <img src={course.hero_image} alt="" />
+                // </div>
+              })}
+            </div>
+            <div className="PaginationContainer">
+              <Pagination
+                coursesPerPage={this.state.coursesPerPage}
+                totalCourses={this.state.courses.length}
+                paginate={paginate}
+              />
+            </div>
           </section>
         </div>
       </section>
       <section className="UserStatsContainer">
         <div className="UserCoursePlayedStats">
           <h1 className="UserCoursePlayedTitle">MOST RECENT USER COURSES PLAYED</h1>
-          {this.state.userscoursesplayed.slice(0, 10).map((courseplayed, index) => {
+          {this.state.userscoursesplayed.slice(0, 4).map((courseplayed, index) => {
             return <div key={index} className="UserCoursePlayedInfo">
               <p><strong>Username:</strong> {courseplayed.user.username}</p>
               <p><strong>Course:</strong> {courseplayed.course[0].name}</p>
@@ -195,7 +149,7 @@ class BirdieTimeUserHome extends React.Component {
         </div>
         <div className="UserCourseWishListStats">
           <h1 className="UserWishListTitle">MOST RECENT COURSES ADDED TO USERS FAVOURITES</h1>
-          {this.state.userscoursefavourites.slice(0, 10).map((coursefavourites, index) => {
+          {this.state.userscoursefavourites.slice(0, 4).map((coursefavourites, index) => {
             return <div key={index} className="UserWishListInfo">
               <p><strong>Username:</strong> {coursefavourites.user.username}</p>
               <p><strong>Course:</strong> {coursefavourites.course[0].name}</p>

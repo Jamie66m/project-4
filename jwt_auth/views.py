@@ -63,14 +63,6 @@ class UserProfileDetailView(APIView):
       serializer = PopulatedUserSerializer(user)
       return Response(serializer.data)
 
-    def put(self, request):
-      request.data['user'] = request.user.id
-      user = PopulatedUserSerializer(data=request.data)
-      if user.is_valid():
-          user.save()
-          return Response(user.data, status=HTTP_201_CREATED)
-      return Response(user.errors, status=HTTP_422_UNPROCESSABLE_ENTITY)
-
 class GolfBagCreateView(APIView):
     # queryset = GolfBag.objects.all()
     # serializer_class = GolfBagSerializer
