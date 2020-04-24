@@ -28,7 +28,7 @@ const App = () => (
     <Switch>
       <Route exact path="/" component={BirdieTimeHome} />
       <Route path="/map" component={MapOfCourse} />
-      <Route path="/register" component={Register} />
+      <Route exact path="/register" component={Register} />
       <Route path="/login" component={Login} />
       <Route exact path="/birdie_time_user_home" component={BirdieTimeUserHome} />
       <Route exact path="/course/:id" component={CourseDetailedPage} />

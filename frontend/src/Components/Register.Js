@@ -1,7 +1,6 @@
 import React from 'react'
 import axios from 'axios'
 // import auth from '../lib/auth'
-
 import RegisterForm from './RegisterForm'
 
 class Register extends React.Component {
