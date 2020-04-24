@@ -37,15 +37,15 @@ class Navbar extends React.Component {
 
       <div className={`navbar-menu ${this.state.navMobileOpen ? 'is-active' : ''}`}>
         <div className="navbar-start">
-          {isLoggedIn && <a className="navbar-item">
+          {isLoggedIn && <div className="navbar-item">
             <Link to="/birdie_time_user_home">Home</Link>
-          </a>}
-          {!isLoggedIn && <a className="navbar-item">
+          </div>}
+          {!isLoggedIn && <div className="navbar-item">
             <Link to="/">Home</Link>
-          </a>}
-          <a className="navbar-item">
+          </div>}
+          <div className="navbar-item">
             <Link to="/map">Map of Courses</Link>
-          </a>
+          </div>
         </div>
 
         <div className="navbar-end">
