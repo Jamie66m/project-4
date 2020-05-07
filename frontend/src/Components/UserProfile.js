@@ -134,7 +134,7 @@ class UserProfile extends React.Component {
       <div className="UserProfileHomeCourseImgContainer">
         <div className="UserProfileHomeCourseImg">
           <figure className="UserProfileHomeCourseFig">
-            {userCourseHome.hero_image && <img src={userCourseHome.hero_image} className="TheUserProfileHomeCourseFig" alt="" />}
+            {userCourseHome && <img src={userCourseHome.hero_image} className="TheUserProfileHomeCourseFig" alt="" />}
           </figure>
         </div>
       </div>
