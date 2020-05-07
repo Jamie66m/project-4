@@ -25,8 +25,8 @@ const RegisterForm = ({ handleSubmit, handleChange, errors, data }) => {
           <i className="fas fa-user"></i>
         </span>
       </div>
-      {errors.username && <small className="help is-danger">
-        {errors.username.message}
+      {errors && <small className="help is-danger">
+        {errors}
       </small>}
     </div>
     <div className="field">
@@ -45,8 +45,8 @@ const RegisterForm = ({ handleSubmit, handleChange, errors, data }) => {
           <i className="fas fa-envelope"></i>
         </span>
       </div>
-      {errors.email && <small className="help is-danger">
-        {errors.email.message}
+      {errors && <small className="help is-danger">
+        {errors}
       </small>}
     </div>
     <div className="field">
@@ -65,8 +65,8 @@ const RegisterForm = ({ handleSubmit, handleChange, errors, data }) => {
           <i className="fas fa-lock"></i>
         </span>
       </div>
-      {errors.password && <small className="help is-danger">
-        {errors.password.message}
+      {errors && <small className="help is-danger">
+        {errors}
       </small>}
     </div>
     <div className="field">
@@ -86,8 +86,8 @@ const RegisterForm = ({ handleSubmit, handleChange, errors, data }) => {
           <i className="fas fa-lock"></i>
         </span>
       </div>
-      {errors.password_confirmation && <small className="help is-danger">
-        {errors.password_confirmation.message}
+      {errors && <small className="help is-danger">
+        {errors}
       </small>}
     </div>
     <button className="button is-success">

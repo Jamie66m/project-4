@@ -12,7 +12,7 @@ from django.contrib.auth.hashers import make_password
 from django.core.exceptions import ValidationError
 
 class UserSerializer(serializers.ModelSerializer):
-
+    
     password = serializers.CharField(write_only=True)
     password_confirmation = serializers.CharField(write_only=True)
 
@@ -32,9 +32,23 @@ class UserSerializer(serializers.ModelSerializer):
         data['password'] = make_password(password)
         return data
 
+    def validate_username(self, value):
+      if not value:
+        raise serializers.ValidationError(
+            'A username is required to register.'
+        )
+      return value
+
+    def validate_email(self, value):
+      if not value:
+        raise serializers.ValidationError(
+            'An email address is required to register.'
+        )
+      return value
+
     class Meta:
         model = User
-        fields = ('id','username', 'email', 'password', 'password_confirmation')
+        fields = ('username', 'email', 'password', 'password_confirmation')
 
 
 class GolfBagSerializer(serializers.ModelSerializer):
