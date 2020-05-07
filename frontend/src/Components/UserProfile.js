@@ -116,7 +116,7 @@ class UserProfile extends React.Component {
     console.log(this.state.user)
 
     const user = this.state.user
-    const userCourseHome = this.state.user.usercourseplayed[0].course[0]
+    const userCourseHome = this.state.user.usercourseplayed[0].course
     const userCoursesPlayed = this.state.user.usercourseplayed
     const userCourseWishlist = this.state.user.usercoursewishlist
     const userCourseFavourites = this.state.user.usercoursefavourites
