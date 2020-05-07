@@ -38,7 +38,7 @@ class UserProfile extends React.Component {
         console.log(res.data)
         this.setState({ user: res.data })
       })
-      .catch(err => this.setState({ error: err.response.data.message }))
+      // .catch(err => this.setState({ error: err.response.data.message }))
   }
 
   handleGolfBag(event) {
