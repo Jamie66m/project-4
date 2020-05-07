@@ -38,7 +38,7 @@ class UserProfile extends React.Component {
         console.log(res.data)
         this.setState({ user: res.data })
       })
-    // .catch(err => this.setState({ error: err.response.data.message }))
+      // .catch(err => this.setState({ error: err.response.data.message }))
   }
 
   handleGolfBag(event) {
@@ -156,19 +156,16 @@ class UserProfile extends React.Component {
         <h2>YOU HAVE PLAYED THESE COURSES</h2>
         <Slider {...settings}>
           {userCoursesPlayed.map((courseplayed, index) => {
-            if (!courseplayed.course[0].hero_image) {
-              return <div key={index} className="CoursesPlayedImgandStats">
-                {/* <figure className="">
-                
-                  {courseplayed.course[0].hero_image && <img src={courseplayed.course[0].hero_image} className="UserCoursesPlayedImg" />}
-                </figure> */}
-                <h1 className="NoUserCoursesPlayedImg">NO HOME COURSE SELECTED TO SHOW IMAGE</h1>
-                {courseplayed.course[0].name && <h1><strong>{courseplayed.course[0].name}</strong></h1>}
-                {courseplayed.rating && <p>Rating: {courseplayed.rating}</p>}
-                {courseplayed.score && <p>Score: {courseplayed.score}</p>}
-                {courseplayed.time && <p>Date Played: {courseplayed.time} </p>}
-              </div>
-            }
+            return <div key={index} className="CoursesPlayedImgandStats">
+              <figure className="">
+                {/* <h3>{book.title}</h3> */}
+                {courseplayed.course[0].hero_image && <img src={courseplayed.course[0].hero_image} className="UserCoursesPlayedImg"/>}
+              </figure>
+              {courseplayed.course[0].name && <h1><strong>{courseplayed.course[0].name}</strong></h1>}
+              {courseplayed.rating && <p>Rating: {courseplayed.rating}</p>}
+              {courseplayed.score && <p>Score: {courseplayed.score}</p>}
+              {courseplayed.time && <p>Date Played: {courseplayed.time} </p>}
+            </div>
           })}
         </Slider>
       </div>
@@ -240,7 +237,7 @@ class UserProfile extends React.Component {
             </div>
             <div className="BagImage">
               <figure>
-                <img src="https://media.golfdigest.com/photos/5ccb388076cfaef7ba82aed0/1:1/w_2000,h_2000,c_limit/Titleist%20Players%204%20Plus.jpg" className="TheBagImage" alt="" />
+                <img src="https://media.golfdigest.com/photos/5ccb388076cfaef7ba82aed0/1:1/w_2000,h_2000,c_limit/Titleist%20Players%204%20Plus.jpg" className="TheBagImage" alt=""/>
               </figure>
             </div>
           </div>
