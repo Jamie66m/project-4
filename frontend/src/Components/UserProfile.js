@@ -134,7 +134,7 @@ class UserProfile extends React.Component {
       <div className="UserProfileHomeCourseImgContainer">
         <div className="UserProfileHomeCourseImg">
           <figure className="UserProfileHomeCourseFig">
-            <img src={userCourseHome.hero_image} className="TheUserProfileHomeCourseFig" alt="" />
+            {userCourseHome.hero_image && <img src={userCourseHome.hero_image} className="TheUserProfileHomeCourseFig" alt="" />}
           </figure>
         </div>
       </div>
@@ -159,15 +159,12 @@ class UserProfile extends React.Component {
             return <div key={index} className="CoursesPlayedImgandStats">
               <figure className="">
                 {/* <h3>{book.title}</h3> */}
-                <img
-                  src={courseplayed.course[0].hero_image}
-                  className="UserCoursesPlayedImg"
-                />
+                {courseplayed.course[0].hero_image && <img src={courseplayed.course[0].hero_image} className="UserCoursesPlayedImg"/>}
               </figure>
-              <h1><strong>{courseplayed.course[0].name}</strong></h1>
-              <p>Rating: {courseplayed.rating}</p>
-              <p>Score: {courseplayed.score}</p>
-              <p>Date Played: {courseplayed.time} </p>
+              {courseplayed.course[0].name && <h1><strong>{courseplayed.course[0].name}</strong></h1>}
+              {courseplayed.rating && <p>Rating: {courseplayed.rating}</p>}
+              {courseplayed.score && <p>Score: {courseplayed.score}</p>}
+              {courseplayed.time && <p>Date Played: {courseplayed.time} </p>}
             </div>
           })}
         </Slider>
@@ -179,13 +176,13 @@ class UserProfile extends React.Component {
             return <div key={index} className="UserCourseWishlistImgandStats">
               <figure className="">
                 {/* <h3>{book.title}</h3> */}
-                <img
+                {courseWishlist.course[0].hero_image && <img
                   src={courseWishlist.course[0].hero_image}
                   className="UserCourseWishlistimg"
-                />
+                />}
               </figure>
-              <h1><strong>{courseWishlist.course[0].name}</strong></h1>
-              <p>Course Ranking: {courseWishlist.course[0].ranking}</p>
+              {courseWishlist.course[0].name && <h1><strong>{courseWishlist.course[0].name}</strong></h1>}
+              {courseWishlist.course[0].ranking && <p>Course Ranking: {courseWishlist.course[0].ranking}</p>}
             </div>
           })}
         </Slider>
@@ -197,13 +194,13 @@ class UserProfile extends React.Component {
             return <div key={index} className="UserCourseFavouritesImgandStats">
               <figure className="">
                 {/* <h3>{book.title}</h3> */}
-                <img
+                {coursefavourites.course[0].hero_image && <img
                   src={coursefavourites.course[0].hero_image}
                   className="UserCourseFavouritesImg"
-                />
+                />}
               </figure>
-              <h1><strong>{coursefavourites.course[0].name}</strong></h1>
-              <p>Course Ranking: {coursefavourites.course[0].ranking}</p>
+              {coursefavourites.course[0].name && <h1><strong>{coursefavourites.course[0].name}</strong></h1>}
+              {coursefavourites.course[0].ranking && <p>Course Ranking: {coursefavourites.course[0].ranking}</p>}
             </div>
           })}
         </Slider>
