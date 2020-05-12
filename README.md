@@ -86,4 +86,133 @@ Several wireframes were put together on a site called MockFlow.
 </p>
 
 
-### 
+### The Back-end
+
+As I have mentioned above there were going to be many relationships to work out and tables within the database.
+
+#### Models
+
+For the PostgreSQL database there are many tables for an individual golf course and the user. Currently a couple of the tables are not ineffect right now as they will be used when I work on the other two concepts for this application. 
+
+Due to my knowledge of golf I understood the relationships between all the features on the golf course and felt comfortable translating this knowledge within my models for the golf course. It was vital that I got the models for the golf course right at the beginning as many complications and loss of precious time could have come from me having to drop the database due to errors I made in my models. Having said this on the application at the moment there are only 5 courses being shown and not 50. The reason for this is that I have realised I need to make adjustments to my models both for the golf course and for the user in the future to be able to instill the other concepts to the application. However, even though in my planning I should potentially have thought further ahead before writing the models but I was concentrating on what I need to generate for my MVP. 
+
+Below are a few of the golf course models:
+
+```py
+class Course(models.Model):
+  name = models.CharField(max_length=50)
+  number_of_holes = models.IntegerField()
+  country = models.CharField(max_length=20)
+  phone_number = models.CharField(max_length=20, blank=True)
+  website_link = models.URLField(max_length=400)
+  contact_name = models.CharField(max_length=20)
+  year_built = models.PositiveIntegerField(blank=True)
+  email_address = models.EmailField()
+  green_fees = models.CharField(max_length=5, blank=True)
+  ranking = models.PositiveIntegerField()
+  hero_image = models.CharField(max_length=300)
+  description = models.CharField(max_length=500)
+  video_highlight_link = models.CharField(max_length=400)
+  video_description = models.CharField(max_length=200, blank=True)
+  pro_golfer_img_1 = models.CharField(max_length=300)
+  pro_golfer_img_2 = models.CharField(max_length=300)
+  pro_golfer_1_review = models.CharField(max_length=200)
+  pro_golfer_2_review = models.CharField(max_length=200)
+  course_type = models.CharField(max_length=10)
+  scorecard = models.CharField(max_length=300)
+
+  address = models.OneToOneField(Address, on_delete=models.PROTECT)
+
+  def __str__(self):
+    return self.name
+```
+
+As you can see directly from the model above that I am implementing a lot of data into this project and I was aware that this was going to take time but I was eager to make sure the user was getting all the relevant information they needed about the course in order to kick start the process of them wanting to play it. 
+
+```py
+class Hole(models.Model):
+  number = models.PositiveIntegerField()
+  video = models.CharField(max_length=400, blank=True)
+  hole_graph = models.CharField(max_length=400, blank=True)
+  bunkers = models.PositiveIntegerField()
+  Mens_Par = models.PositiveIntegerField()
+  Mens_SI = models.PositiveIntegerField()
+  Ladies_Par = models.PositiveIntegerField()
+  Ladies_SI = models.PositiveIntegerField()
+
+  course = models.ForeignKey(Course, related_name='coursesholes', on_delete=models.PROTECT)
+
+  def __str__(self):
+    return f'{self.course} - {self.number}'
+```
+
+```py 
+class HoleTeeBox(models.Model):
+  teeboxtype = models.CharField(max_length=30)
+  color = models.CharField(max_length=10)
+  length = models.PositiveIntegerField()
+
+  hole = models.ForeignKey(Hole, related_name="holes", on_delete=models.CASCADE)
+
+  def __str__(self):
+    return f'{self.hole} - {self.color}'
+```
+
+I really wanted the user to be able to explore each course to its full potential which is why I decided to manually add in the django admin panel all 18 holes to the golf course and all the teeboxes for each hole. However, I knew there would be some variety between the courses with regards to the number of teeboxes on a hole and therefore only implemented three for each course as I knew this would be easier to manage on the front-end. 
+
+The ForeignKey relationship was critical here as I understood a course needs many holes and a hole needs many teeboxes. However, frustratingly I had realised when nesting my serializers and understanding to do this I could use the `related_name` that I used a name that is confusing for the `HoleTeeBox` model by making the `related_name="holes"`. 
+
+Below are the user models:
+
+```py
+class User(AbstractUser):
+
+  first_name = models.CharField(max_length=20, blank=True)
+  last_name = models.CharField(max_length=20, blank=True)
+  user_bio = models.CharField(max_length=200, blank=True)
+  handicap = models.PositiveIntegerField(null=True)
+  profileimage = models.ImageField(blank=True)
+  video_of_swing = models.FileField(blank=True)
+
+```
+
+For the users, I extended the basic User provided by Django to include the following extra fields: first_name, last_name, user_bio, handicap, profileimage and video_of_swing. Originally the purpose of this model was for users once they have registered and logged in that they could then update their profile information by adding this information. However, I struggled to implement a PUT route due to not quite writing the correct code in my Views and therefore at the moment this model is a little redundant. Furthermore, as a consequence I couldn't quite follow the wireframe I had drawn up for the user profile and therefore had to adapt. 
+
+
+```py
+class GolfBag(models.Model):
+  putter = models.CharField(max_length=30)
+  sw = models.CharField(max_length=30)
+  pw = models.CharField(max_length=30)
+  gw = models.CharField(max_length=30)
+  lw = models.CharField(max_length=30)
+  ulw = models.CharField(max_length=30)
+  irons = models.CharField(max_length=30)
+  woods = models.CharField(max_length=30)
+  driver = models.CharField(max_length=30)
+
+  user = models.ForeignKey(User, related_name="usergolfbag", on_delete=models.PROTECT)
+
+  def __str__(self):
+    return f'{self.user}'
+```
+
+The ability for a user to create a golf bag was an important feature for the MVP and the UX. I have, however, made a slight error with my relationship between the user and it's golfbag. This should be a `One-to-One` relationship instead of a ForeignKey relationship. I was only intending for the user to create one golf bag which they would be able to edit on their profile. Currently they are able to post many golf bags to the database but to counter this issue on the front-end the GET request for the users golfbag brings back a response of the most recent golfbag that has been created by the user. 
+
+```js
+ const golfbag = this.state.user.usergolfbag[0]
+```
+
+There are three other important models that definitely added to the UX of the application at this current point in time.
+
+```py
+
+class UserHomeCourse(models.Model):
+  course = models.OneToOneField(Course, on_delete=models.PROTECT)
+  user = models.ForeignKey(User, related_name="userhomecourse", on_delete=models.PROTECT)
+
+  def __str__(self):
+    return f'{self.user} + {self.course}' 
+```
+
+The user adding a home course is vital for the future concepts of the project. However, this model definitely needs to be adjusted in the future as the relationships are not quite correct. I would like for users to be able to find each other based on their home course and so that they can play with each other. 
