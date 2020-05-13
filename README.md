@@ -20,15 +20,14 @@ Check out [Birdie Time](https://birdie-time.herokuapp.com/)
 2. [Technologies used](#Technologies-used)
 3. [Approach](#Approach)
     - [Planning](#Planning)
-    - [Wireframes]
+    - [Wireframes](#Wireframes)
     - [Back-end](#Back-end)
     - [Front-end](#Front-end)
-    - [File Structure](#File-structure)
 4. [Screenshots](#Screenshots)
-5. [Potential future features](#Potential-future-features)
-6. [Bugs](#Bugs)
-7. [Lessons learned](#Lessons-learned)
-8. [Credit](#credit)
+5. [Winners](#Winners)
+6. [Challengers](#Challengers)
+7. [Future features](#Future-features)
+8. [Lessons learned](#Lessons-learned)
 
 ## Brief
 
@@ -58,7 +57,7 @@ Check out [Birdie Time](https://birdie-time.herokuapp.com/)
 
 ## Approach Taken
 
-### The Plan
+### Planning
 
 At the start of the project I knew that I felt more comfortable with the front-end instead of the back-end and therefore gave myself more time to get the back-end right. Originally I tried to find an external API that would help generate all my data, however, there were no free public API's and therefore I decided to create the API myself and generate all the data using the django admin panel. 
 
@@ -86,7 +85,7 @@ Several wireframes were put together on a site called MockFlow.
 </p>
 
 
-### The Back-end
+### Back-end
 
 As I have mentioned above there were going to be many relationships to work out and tables within the database.
 
@@ -390,7 +389,7 @@ class HoleDetailView(RetrieveUpdateDestroyAPIView):
     return Response(serializer.data)
 ```
 
-### The Front-end
+### Front-end
 
 I spent about 3 days on the front-end and this is because the back-end and manually adding the golf courses took me a bit longer than I was hoping. However, for those 3 days I was very happy for how much I managed to implement. With much of the code being similar to what I have done in other projects I am just going to highlight a couple of new features that I hadn't attempted before.
 
@@ -458,7 +457,7 @@ On the user home page I wanted to display the most current courses played by the
 ```
 
 
-## Application Images
+## Screenshots
 
 ### Home Page
 
