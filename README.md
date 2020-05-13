@@ -464,3 +464,89 @@ On the user home page I wanted to display the most current courses played by the
 <p align="center">
   <img height=380 alt="home" src="./images/HomepageBT.jpg">
 </p>
+
+
+### User Home
+
+<p align="center">
+  <img height=380 alt="home" src="./images/BTUserHome.jpg">
+</p>
+
+### Course Page
+
+<p align="center">
+  <img height=380 alt="home" src="./images/DetailedCourse1.jpg">
+</p>
+
+<p align="center">
+  <img height=380 alt="home" src="./images/DetailedCourse2.jpg">
+</p>
+
+<p align="center">
+  <img height=380 alt="home" src="./images/CourseDetailed3.jpg">
+</p>
+
+
+### Course Holes
+
+<p align="center">
+  <img height=380 alt="home" src="./images/CourseHoles1.jpg">
+</p>
+
+<p align="center">
+  <img height=380 alt="home" src="./images/CourseHoles2.jpg">
+</p>
+
+
+### Individual Hole
+
+
+<p align="center">
+  <img height=380 alt="home" src="./images/CourseHole.jpg">
+</p>
+
+
+### User Profile
+
+
+<p align="center">
+  <img height=380 alt="home" src="./images/BTUserProfile.jpg">
+</p>
+
+<p align="center">
+  <img height=380 alt="home" src="./images/BTUserProfile2.jpg">
+</p>
+
+
+### Winners
+
+- As I have said above the real purpose of this project was to do something I was passionate about and to get a guage for my current ability. I was extremely proud to be able to complete full-stack application on my own and being able to get to grips with some of the fundamentals that I had definitely previously struggled with. 
+- I think the overall level of detail to some of the pages is very pleasing and I believe the user is getting all the necessary information they need about each course.
+- I think there is a clear flow through the application. 
+- Visually there definitely needs to be a lot of improvement but considering I only spent 3 days on the front-end, I wrote nearly 2000 lines of code in css which was a great challenge but felt very rewarding to see that I had produced a multi-page application.
+- Considering we had only been taught Django for a couple of days and Python for a week it was very rewarding to be able to manouver pieces between the models, serializers and views in order that I could get the relevant information I needed on the front-end
+
+
+### Challengers
+
+- The majority of the challengers definitely came on the back-end as this was the side that I was definitely less comfortable with. I have mentioned many of the issues I faced through out this ReadMe and there were some I managed to solve but I think only having GET and POST requests is limiting this applications potential at the moment and something I am very keen to go back and work on.
+- There are a couple of bug issues:
+  - The validation errors are currently not appearing when you input the wrong information into the register form.
+  - The user home course image doesn't sometimes appear on the user profile.
+  - I have used a carousel to display the user courses played on their profile and as a consequence there is the occasional duplication.
+
+### Future features
+
+- I have highlighted above where I would definitely like to take this application and thats by bringing more interaction between the users and having an online instructor to comment on a users swing.
+- I am wanting golf lovers to play with each other and it would be great if you communicate with a golfer who is close to a course you as a user haven't played and arranged a tee time to play.
+- I want to bring a competitive aspect to the application and therefore introducing leaderboreds (handicap leaderbored, courses played leaderbored, lowest score leaderbored) would definitely help this.
+- I might also introduce and external API where the user can book a tee time on the site
+- Implement my own map of the courses as currently I am using a google maps version.
+
+
+### Lessons learned
+
+- How to use an Admin Panel 
+- A better understanding of PostgreSQL, Django and Python
+- Planning a project for a specific time-frame.
+- Django and Python provide useful information for error handling.
