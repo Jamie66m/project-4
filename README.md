@@ -216,3 +216,252 @@ class UserHomeCourse(models.Model):
 ```
 
 The user adding a home course is vital for the future concepts of the project. However, this model definitely needs to be adjusted in the future as the relationships are not quite correct. I would like for users to be able to find each other based on their home course and so that they can play with each other. 
+
+
+```py
+class UserCoursePlayed(models.Model):
+
+  rating = models.PositiveIntegerField()
+  score = models.PositiveIntegerField()
+  time = models.DateField()
+  course = models.ManyToManyField(Course, related_name="courseplayed", blank=True)
+
+  user = models.ForeignKey(User, related_name="usercourseplayed", on_delete=models.CASCADE)
+
+  def __str__(self):
+    return f'{self.user} + {self.course}' 
+```
+
+I wanted the user to be add a course played that they had played with a little bit more information. I was originally going to try add validation to stop the user from adding the course twice on the front-end for the same day but then thought there maybe occurances that the golfer does play twice on the same day.
+
+In the serializers I changed the specifications for the DateField. This was to make it simpler on the front-end for the user to input. However, in the future I would like to have a proper calendar shown to the user to select the date.
+
+```py
+time = fields.DateField(input_formats=['%Y-%m-%d'])
+```
+
+```py
+class CourseComment(models.Model):
+  comment = models.CharField(max_length=200)
+  created_at = models.DateTimeField(auto_now_add=True)
+  course = models.ForeignKey(Course, related_name="coursecomments", on_delete=models.PROTECT)
+  user = models.ForeignKey(User, related_name='usercoursecomments', on_delete=models.PROTECT)
+
+  def __str__(self):
+    return f'{self.user} + {self.course}' 
+```
+
+I thought it was very important to add a comment feature. Currently the comments are only featured for the course but in the future I would like to add a comment section for each hole as well. I was having some difficulties being able to get the user data to appear in Insomnia and thus in turn on the front-end. So currently each comment doesn't have a designated user which is something I definitely intend to fix.
+
+#### Serializers
+
+The significant part of the serializers was to be able to nest them in a way that I would be able to use all the data on the front-end. 
+
+- For the golf course serializers I had to create a populated course serializer which had all the fields of the course and then add the `related_names` to the end in order to nest the other serializers and for the data of those serializers to appear in Insomnia or the Django Rest Framework
+
+```py
+class PopulateCourseSerializer(serializers.ModelSerializer):
+
+  address = AddressSerializer()
+  coursesholes = HoleSerializer(many=True)
+  coursesimages = CourseImageSerializer(many=True)
+  coursecomments = PopulateCourseCommentSerializer(many=True)
+
+  class Meta:
+
+    model = Course
+    fields = ('id', 'name', 'number_of_holes', 'country', 'phone_number',
+    'website_link', 'contact_name', 'year_built', 'email_address', 'green_fees', 'ranking', 
+    'hero_image', 'description', 'video_highlight_link', 'video_description', 'pro_golfer_img_1', 
+    'pro_golfer_img_2', 'pro_golfer_1_review', 'pro_golfer_2_review', 'course_type', 'scorecard', 'address', 'coursesholes', 'coursesimages', 'coursecomments')
+```
+
+To add the course comments I had to import the `CourseComment` model from the `jwt_auth.models` and then create a serializer for the comments which was the nested in the `PopulateCourseSerializer`.
+
+- For the user serializers I had to replicate what I had done with the course serializers but with one slight difference. To be able to read some of the data I had to create another serializer with the previous serializer as the argument within the parentheses. 
+
+```py
+class UserCoursePlayedSerializer(serializers.ModelSerializer):
+
+    # course = CourseSerializer(read_only=True)
+    # user = UserSerializer()
+    time = fields.DateField(input_formats=['%Y-%m-%d'])
+
+    class Meta:
+      model = UserCoursePlayed
+      fields = ('id', 'rating', 'score', 'time', 'course', 'user')
+
+class UserCoursePlayedReadSerializer(UserCoursePlayedSerializer):
+    course = CourseSerializer(many=True)
+    user = UserSerializer(read_only=True)
+```
+
+From here I nested the `UserCoursePlayedReadSerializer` within in the `PopulatedUserSerializer`
+
+#### Views
+
+- User 
+  - Frustratingly I had issues implementing end points for the user outside of the typical GET and POST requests as I was very eager for the user to be able to update and delete parts of their profile with the extra fields implemented in the user model but this unfortunately was a challenge that I couldn't solve within the project time.
+
+  |           	| GET 	| POST 	| PUT 	| DELETE 	|
+  |-----------	|-----	|------	|-----	|--------	|
+  | /register 	|     	|   x  	|     	|        	|
+  | /login    	|     	|   x  	|     	|        	|
+  | /profile 	  |  x  	|    	  |  	    |     	  |
+  | /profile/golfbag   	|   	|   x	  |   	  |       |
+  | /profile/golfbag/<int:pk5>   	|  x 	|   	  |   	  |       |
+  | /allcoursesplayed   |   x 	 |   	   |   	   |       |
+  | /allcoursefavourites   |   x 	 |   	   |   	   |       |
+  | /profile/coursesplayed   |    	 |   	x    |   	   |       |
+  | /profile/courseswishlist   |    	 |   	x    |   	   |       |
+  | /profile/coursesfavourites  |    	 |   	x    |   	   |       |
+  | /profile/userhomecourse  |    	 |   	x    |   	   |       |
+
+Due to how I had nested the serializers I was able to post all the data and then user a standard GET request for the `/profile` endpoint to receive most of the data.
+
+```py
+class UserProfileDetailView(APIView):
+    parser_class = (FileUploadParser,)
+    permission_classes = (IsAuthenticated, )
+
+    def get(self, request):
+      user = User.objects.get(pk=request.user.id)
+      serializer = PopulatedUserSerializer(user)
+      return Response(serializer.data)
+```
+
+The `FileUploadParser` is in there at the moment as I was looking to attempt to add profile pictures for the user but unfortunately did not have the time to attach this to the project.
+
+Secondly it was also necessary to have authentication on these views. 
+
+```py
+class UserCoursePlayedListView(APIView):
+    permission_classes = (IsAuthenticated, )
+
+    def post(self, request):
+      request.data['user'] = request.user.id
+      addusercourseplayed = UserCoursePlayedSerializer(data=request.data)
+      if addusercourseplayed.is_valid():
+          addusercourseplayed.save()
+          return Response(addusercourseplayed.data, status=HTTP_201_CREATED)
+      return Response(addusercourseplayed.errors, status=HTTP_422_UNPROCESSABLE_ENTITY)
+```
+
+The code above highlights how I posted all the data to that specific user and from there use a GET request as I mentioned above to collect all the data.
+
+- Course
+  - The tricky part here was being able to give each attribute their own separate primary key as this was going to be very important on the front-end.
+
+|           	| GET 	| POST 	| PUT 	| DELETE 	|
+|-----------	|-----	|------	|-----	|--------	|
+  | /courses/	|   x  	|    	|     	|        	|
+  | /courses/<int:pk>/   	|   x  	|     	|     	|        	|
+  | /courses/<int:pk>/holes/	  |  x  	|    	  |  	    |     	  |
+  | /courses/<int:pk>/holes/<int:pk2>/   	|  x 	|     |   	  |       |
+  | /courses/<int:pk>/holes/<int:pk2>/holeteeboxes/ 	|  x 	|   	  |   	  |       |
+  | /courses/<int:pk>/holes/<int:pk2>/holeteeboxes/<int:pk3>'  |   x 	 |   	   |   	   |       |
+  | /courses/<int:pk>/images/   |   x 	 |   	   |   	   |       |
+
+
+```py 
+class HoleListView(ListCreateAPIView):
+  queryset = Hole.objects.all()
+  serializer_class = HoleSerializer
+  permission_classes = (IsAuthenticated, )
+
+  def get(self, request, pk, *args, **kwargs):
+    holes = Hole.objects.filter(course_id=pk)
+    serializer = PopulateHoleSerializer(holes, many=True)
+    return Response(serializer.data)
+```
+
+Above is an example of how I filtered the holes by each course. Below is how I appended a pk to a hole in order that I could get that individual hole on the front-end. This process was followed also for the teeboxes. 
+
+
+```py
+class HoleDetailView(RetrieveUpdateDestroyAPIView):
+  queryset = Hole.objects.all()
+  serializer_class = HoleSerializer
+  permission_classes = (IsAuthenticated, )
+
+  def get(self, request, *args, **kwargs):
+    hole = Hole.objects.get(id=self.kwargs.get('pk2', ''))
+    serializer = PopulateHoleSerializer(hole)
+    return Response(serializer.data)
+```
+
+### The Front-end
+
+I spent about 3 days on the front-end and this is because the back-end and manually adding the golf courses took me a bit longer than I was hoping. However, for those 3 days I was very happy for how much I managed to implement. With much of the code being similar to what I have done in other projects I am just going to highlight a couple of new features that I hadn't attempted before.
+
+With there going to be 50 courses to search through on this application I wanted to move away from using the typical search bar and instead used pagination.
+
+- The variables are below. 
+
+```js
+  const indexOfLastCourse = this.state.currentPage * this.state.coursesPerPage
+  const indexOfFirstCourse = indexOfLastCourse - this.state.coursesPerPage
+  const currentCourse = this.state.filteredCourses.slice(indexOfFirstCourse,indexOfLastCourse)
+  const courses = currentCourse
+  // const setCurrentPage = this.state.currentPage
+  const paginate = (pageNumber) => this.setState({ currentPage: pageNumber })
+```
+
+The first four variables are used so that there would be pagination after every 4 courses were displayed on a page. I would then pass props through to the `{Pagination}` component like so.
+
+```js
+  <Pagination
+     coursesPerPage={this.state.coursesPerPage}
+     totalCourses={this.state.courses.length}
+     paginate={paginate}
+  />
+```
+
+To be able to determine how many pages I needed I had to divide the total amount of courses by how many courses I wanted to display per page. 
+
+```js
+import React from 'react'
+
+const Pagination = ({ coursesPerPage, totalCourses, paginate }) => {
+  const pageNumbers = []
+
+  for (let i = 1; i <= Math.ceil(totalCourses / coursesPerPage); i++) {
+    pageNumbers.push(i)
+  }
+
+  return (
+    <nav className="pagination" role="navigation" aria-label="pagination">
+      <ul className="pagination-list">
+        {pageNumbers.map((number, index) => {
+          return <li key={index}>
+            <a onClick={() => paginate(number)} className="pagination-link is-current" aria-label="Page 1" aria-current="page">{number}</a>
+          </li>
+        })}
+      </ul>
+    </nav>
+  )
+}
+
+export default Pagination
+```
+
+On the user home page I wanted to display the most current courses played by the users and so used the slice method to only cut this to 4 
+
+```js
+  {this.state.userscoursesplayed.slice(0, 4).map((courseplayed, index) => {
+      return <div key={index} className="UserCoursePlayedInfo">
+        <p><strong>Username:</strong> {courseplayed.user.username}</p>
+        <p><strong>Course:</strong> {courseplayed.course[0].name}</p>
+        <p><strong>Round Score:</strong> {courseplayed.score}</p>
+      </div>
+  })}
+```
+
+
+## Application Images
+
+### Home Page
+
+<p align="center">
+  <img height=380 alt="home" src="./images/HomepageBT.jpg">
+</p>
