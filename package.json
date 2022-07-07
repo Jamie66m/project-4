@@ -38,7 +38,7 @@
   "dependencies": {
     "axios": "^0.19.2",
     "bulma": "^0.8.2",
-    "moment": "^2.24.0",
+    "moment": "^2.29.4",
     "prop-types": "^15.7.2",
     "react-alert": "^7.0.0",
     "react-alert-template-basic": "^1.0.0",
